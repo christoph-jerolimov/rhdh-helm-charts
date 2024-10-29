@@ -1,0 +1,27 @@
+upstream:
+  backstage:
+    appConfig:
+      dynamicPlugins:
+        frontend:
+          janus-idp.backstage-plugin-dynamic-home-page:
+            mountPoints:
+              - mountPoint: home.page/cards
+                importName: SearchBar
+                config:
+                  layouts:
+                    xl: { w: 10, h: 1, x: 1 }
+                    lg: { w: 10, h: 1, x: 1 }
+                    md: { w: 10, h: 1, x: 1 }
+                    sm: { w: 10, h: 1, x: 1 }
+                    xs: { w: 12, h: 1 }
+                    xxs: { w: 12, h: 1 }
+              - mountPoint: home.page/cards
+                importName: CatalogStarredEntitiesCard
+                config:
+                  layouts:
+                    xl: { w: 6, h: 4 }
+                    lg: { w: 6, h: 4 }
+                    md: { w: 6, h: 4 }
+                    sm: { w: 12, h: 4 }
+                    xs: { w: 12, h: 4 }
+                    xxs: { w: 12, h: 4 }
