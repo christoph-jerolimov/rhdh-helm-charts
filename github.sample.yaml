@@ -1,0 +1,13 @@
+upstream:
+  backstage:
+    appConfig:
+      #dangerouslyAllowSignInWithoutUserInCatalog: true
+      auth:
+        environment: production
+        providers:
+          github:
+            production:
+              # Requires a GitHub app and updated callback URL:
+              # https://github.com/settings/apps
+              clientId: TODO
+              clientSecret: TODO
