@@ -1,0 +1,7 @@
+global:
+  dynamic:
+    plugins:
+      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-bulk-import
+        disabled: false
+      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-bulk-import-backend-dynamic
+        disabled: false

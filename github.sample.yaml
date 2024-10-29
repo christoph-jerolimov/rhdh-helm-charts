@@ -11,3 +11,7 @@ upstream:
               # https://github.com/settings/apps
               clientId: TODO
               clientSecret: TODO
+      # integrations:
+      #   github:
+      #     - host: github.com
+      #       token: github_pat_TODO
