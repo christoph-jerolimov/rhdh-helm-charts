@@ -1,0 +1,24 @@
+global:
+  dynamic:
+    includes:
+      - dynamic-plugins.default.yaml
+    plugins:
+      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-ocm
+        disabled: false
+      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-ocm-backend-dynamic
+        disabled: false
+
+upstream:
+  backstage:
+    appConfig:
+      catalog:
+        providers:
+          ocm:
+            default:
+              name: ocm-cluster
+              url: TODO
+              serviceAccountToken: TODO
+              skipTLSVerify: true
+              schedule:
+                frequency: { minutes: 1 }
+                timeout: { minutes: 1 }
