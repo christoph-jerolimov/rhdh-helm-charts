@@ -1,0 +1,53 @@
+global:
+  dynamic:
+    plugins:
+      - package: oci://quay.io/jerolimov/backstage-community-npm-plugin!backstage-community-plugin-npm
+        disabled: false
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              backstage-community.plugin-npm:
+                mountPoints:
+                  - mountPoint: entity.page.overview/cards
+                    importName: NpmInfoCard
+                    config:
+                      layout:
+                        gridColumn: '5 / -1'
+                      if:
+                        anyOf:
+                          - hasAnnotation: npm/package
+                  - mountPoint: entity.page.overview/cards
+                    importName: NpmReleaseOverviewCard
+                    config:
+                      layout:
+                        gridColumn: '5 / -1'
+                      if:
+                        anyOf:
+                          - hasAnnotation: npm/package
+                  - mountPoint: entity.page.image-registry/cards
+                    importName: NpmReleaseTableCard
+                    config:
+                      layout:
+                        gridColumn: '1 / -1'
+                      if:
+                        anyOf:
+                          - hasAnnotation: npm/package
+
+upstream:
+  backstage:
+    # image:
+    #   registry: quay.io
+    #   repository: janus-idp/backstage-showcase
+    #   tag: next
+    #   pullPolicy: Always
+    appConfig:
+      catalog:
+        rules:
+          - allow: [Component, System, API, Resource, Location]
+        locations:
+          - type: url
+            target: https://github.com/backstage/community-plugins/blob/main/workspaces/npm/examples/org.yaml
+            rules:
+              - allow: [User, Group]
+          - type: url
+            target: https://github.com/backstage/community-plugins/blob/main/workspaces/npm/examples/entities.yaml
