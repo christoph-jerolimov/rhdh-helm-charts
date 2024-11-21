@@ -1,0 +1,30 @@
+upstream:
+  backstage:
+    extraEnvVars:
+      # From helm default values
+      - name: BACKEND_SECRET
+        valueFrom:
+          secretKeyRef:
+            key: backend-secret
+            name: '{{ include "janus-idp.backend-secret-name" $ }}'
+      - name: POSTGRESQL_ADMIN_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: postgres-password
+            name: '{{- include "janus-idp.postgresql.secretName" . }}'
+      # Allow self signed certificates
+      - name: NODE_TLS_REJECT_UNAUTHORIZED
+        value: "0"
+    appConfig:
+      kubernetes:
+        serviceLocatorMethod:
+          type: multiTenant
+        clusterLocatorMethods:
+          - type: config
+            clusters:
+              - name: current-cluster
+                url: TODO
+                authProvider: serviceAccount
+                skipTLSVerify: true
+                skipMetricsLookup: true
+                serviceAccountToken: TODO

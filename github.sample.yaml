@@ -1,7 +1,7 @@
 upstream:
   backstage:
     appConfig:
-      #dangerouslyAllowSignInWithoutUserInCatalog: true
+      # dangerouslyAllowSignInWithoutUserInCatalog: true
       auth:
         environment: production
         providers:
