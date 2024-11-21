@@ -1,7 +1,5 @@
 global:
   dynamic:
-    includes:
-      - dynamic-plugins.default.yaml
     plugins:
       - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-ocm
         disabled: false
