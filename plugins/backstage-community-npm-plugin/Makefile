@@ -27,7 +27,7 @@ install-deps:
 
 build:
 	cd "${git-local-folder}/workspaces/${plugin-workspace}/plugins/${plugin-name}" && npx --yes "@janus-idp/cli@${janus-cli-version}" package export-dynamic-plugin
-	cd "${git-local-folder}/workspaces/${plugin-workspace}/plugins/${plugin-name}" && npx --yes "@janus-idp/cli@${janus-cli-version}" package package-dynamic-plugins -t ${image-tag}
+	cd "${git-local-folder}/workspaces/${plugin-workspace}/plugins/${plugin-name}" && npx --yes "@janus-idp/cli@${janus-cli-version}" package package-dynamic-plugins -t "${image-local-tag}"
 
 publish:
 	podman push "${image-local-tag}" "${image-remote-tag}"
