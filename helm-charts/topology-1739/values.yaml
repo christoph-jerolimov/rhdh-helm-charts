@@ -1,0 +1,26 @@
+global:
+  dynamic:
+    plugins:
+      - package: ./dynamic-plugins/dist/backstage-plugin-kubernetes
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-plugin-kubernetes-backend-dynamic
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-topology
+        disabled: false
+
+upstream:
+  backstage:
+    image:
+      registry: quay.io
+      repository: janus-idp/backstage-showcase
+      tag: pr-1739
+      pullPolicy: Always
+    appConfig:
+      catalog:
+        rules:
+          - allow: [Component, System, API, Resource, Location]
+        locations:
+          - type: url
+            target: https://github.com/christoph-jerolimov/janus/blob/main/test-catalog/all.yaml
+            rules:
+              - allow: [Component, System, API, Resource, Location, User, Group]
