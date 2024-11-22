@@ -5,7 +5,7 @@ chart-name=openshift-helm-charts/redhat-developer-hub
 chart-version=1.3
 
 release-name=redhat-developer-hub
-release-namespace=rhdh-1-3-default
+release-namespace=rhdh-1-3-minimal
 
 cluster-route-suffix != ../../scripts/get-cluster-route-suffix.sh
 
