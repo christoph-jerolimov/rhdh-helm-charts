@@ -3,11 +3,11 @@ global:
     plugins:
       - package: ./dynamic-plugins/dist/backstage-community-plugin-rbac
         disabled: false
-      - package: ./dynamic-plugins/dist/backstage-community-plugin-tech-radar
-        disabled: false
       - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-bulk-import
         disabled: false
       - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-bulk-import-backend-dynamic
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-tech-radar
         disabled: false
       - package: ./dynamic-plugins/dist/backstage-plugin-kubernetes
         disabled: false
@@ -452,3 +452,15 @@ upstream:
                     xs: { w: 6, h: 4, x: 6 }
                     xxs: { w: 6, h: 4, x: 6 }
 
+      permission:
+        enabled: true
+        rbac:
+          pluginsWithPermission:
+            # - kubernetes
+            - bulk-import
+            - catalog
+            # - scaffolder
+            # - policy
+          admin:
+            superUsers:
+              - name: user:default/christoph-jerolimov
