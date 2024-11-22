@@ -8,6 +8,7 @@ upstream:
     appConfig:
       app:
         branding:
+          # https://docs.redhat.com/en/documentation/red_hat_developer_hub/1.3/html/getting_started_with_red_hat_developer_hub/assembly-customize-rhdh-theme#proc-customize-rhdh-branding_assembly-customize-rhdh-theme
           theme:
             light:
               palette:
