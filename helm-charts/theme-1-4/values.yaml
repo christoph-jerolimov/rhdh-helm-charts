@@ -1,0 +1,37 @@
+upstream:
+  backstage:
+    image:
+      registry: quay.io
+      repository: janus-idp/backstage-showcase
+      tag: next
+      pullPolicy: Always
+    appConfig:
+      app:
+        branding:
+          theme:
+            light:
+              palette:
+                primary:
+                  main: '#00ff00'
+                navigation:
+                  indicator: '#00ffff'
+              pageTheme:
+                default:
+                  backgroundColor: ['#00ff00', '#0000ff']
+            dark:
+              palette:
+                primary:
+                  main: '#00ff00'
+                navigation:
+                  indicator: '#00ffff'
+              pageTheme:
+                default:
+                  backgroundColor: ['#00ff00', '#0000ff']
+      catalog:
+        rules:
+          - allow: [Component, System, API, Resource, Location]
+        locations:
+          - type: url
+            target: https://github.com/christoph-jerolimov/janus/blob/main/test-catalog/all.yaml
+            rules:
+              - allow: [Component, System, API, Resource, Location, User, Group]

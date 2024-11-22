@@ -1,0 +1,42 @@
+upstream:
+  backstage:
+    image:
+      registry: registry.redhat.io
+      repository: rhdh/rhdh-hub-rhel9
+      tag: 1.1-107.1717076948
+      pullPolicy: Always
+    appConfig:
+      app:
+        baseUrl: 'https://{{- include "janus-idp.hostname" . }}'
+        # https://docs.redhat.com/en/documentation/red_hat_developer_hub/1.1/html/getting_started_with_red_hat_developer_hub/ref-additional-rhdh-customizations_rhdh-getting-started
+        branding:
+          theme:
+            light:
+              primaryColor: '#00ff00'
+              headerColor1: '#00ff00'
+              headerColor2: '#0000ff'
+              navigationIndicatorColor: '#00ffff'
+            dark:
+              primaryColor: '#00ff00'
+              headerColor1: '#00ff00'
+              headerColor2: '#0000ff'
+              navigationIndicatorColor: '#00ffff'
+      backend:
+        baseUrl: 'https://{{- include "janus-idp.hostname" . }}'
+        cors:
+          origin: 'https://{{- include "janus-idp.hostname" . }}'
+        database:
+          connection:
+            password: ${POSTGRESQL_ADMIN_PASSWORD}
+            user: postgres
+        auth:
+          keys:
+            - secret: ${BACKEND_SECRET}
+      catalog:
+        rules:
+          - allow: [Component, System, API, Resource, Location]
+        locations:
+          - type: url
+            target: https://github.com/christoph-jerolimov/janus/blob/main/test-catalog/all.yaml
+            rules:
+              - allow: [Component, System, API, Resource, Location, User, Group]
