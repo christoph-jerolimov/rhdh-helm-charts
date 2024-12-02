@@ -1,0 +1,79 @@
+global:
+  dynamic:
+    plugins:
+      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-rbac
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-plugin-tech-radar
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-plugin-kubernetes
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-plugin-kubernetes-backend-dynamic
+        disabled: false
+      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-tekton
+        disabled: false
+      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-topology
+        disabled: false
+      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-acr
+        disabled: false
+      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-jfrog-artifactory
+        disabled: false
+      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-nexus-repository-manager
+        disabled: false
+      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-quay
+        disabled: false
+
+upstream:
+  backstage:
+    image:
+      registry: quay.io
+      repository: janus-idp/backstage-showcase
+      tag: pr-2031
+      pullPolicy: IfNotPresent
+
+    appConfig:
+      app:
+        baseUrl: 'https://{{- include "janus-idp.hostname" . }}'
+
+      backend:
+        baseUrl: 'https://{{- include "janus-idp.hostname" . }}'
+        cors:
+          origin: 'https://{{- include "janus-idp.hostname" . }}'
+        database:
+          connection:
+            password: ${POSTGRESQL_ADMIN_PASSWORD}
+            user: postgres
+        auth:
+          keys:
+            - secret: ${BACKEND_SECRET}
+
+      catalog:
+        rules:
+          - allow: [Component, System, API, Resource, Location]
+        locations:
+          - type: url
+            target: https://github.com/christoph-jerolimov/janus/blob/main/test-catalog/all.yaml
+            rules:
+              - allow: [Component, System, API, Resource, Location, User, Group]
+
+      permission:
+        enabled: true
+        rbac:
+          pluginsWithPermission:
+            # - catalog
+            # - scaffolder
+            # - policy
+            # - kubernetes
+          admin:
+            superUsers:
+              - name: user:default/christoph-jerolimov
+
+  # reduce memoty usage
+  postgresql:
+    primary:
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 250m
+          memory: 256Mi
