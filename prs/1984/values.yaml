@@ -23,8 +23,8 @@ upstream:
     image:
       registry: quay.io
       repository: janus-idp/backstage-showcase
-      tag: pr-1993-6e0922de
-      pullPolicy: Always
+      tag: pr-1984-a211b370
+      pullPolicy: IfNotPresent
 
     appConfig:
       dangerouslyAllowSignInWithoutUserInCatalog: true
@@ -474,12 +474,12 @@ upstream:
           #           xxs: { w: 6, h: 4, x: 6 }
 
       permission:
-        enabled: true
+        enabled: false
         rbac:
-          pluginsWithPermission:
-            - catalog
-            - permission
-            - scaffolder
+          # pluginsWithPermission:
+          #   - catalog
+          #   - permission
+          #   - scaffolder
           # policyFileReload: true
           # policies-csv-file: ./rbac/rbac-policies.csv
           # conditionalPoliciesFile: ./rbac-conditions/rbac-conditional-policies.yaml

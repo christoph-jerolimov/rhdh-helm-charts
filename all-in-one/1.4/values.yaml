@@ -17,13 +17,13 @@ global:
         disabled: false
       - package: ./dynamic-plugins/dist/backstage-community-plugin-topology
         disabled: false
-      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-acr
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-acr
         disabled: false
-      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-jfrog-artifactory
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-jfrog-artifactory
         disabled: false
-      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-nexus-repository-manager
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-nexus-repository-manager
         disabled: false
-      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-quay
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-quay
         disabled: false
 
 upstream:
@@ -467,16 +467,19 @@ upstream:
         enabled: true
         rbac:
           pluginsWithPermission:
-            # - kubernetes
-            - bulk-import
             - catalog
-            # - scaffolder
-            # - policy
+            - permission
+            - scaffolder
+          # policyFileReload: true
+          # policies-csv-file: ./rbac/rbac-policies.csv
+          # conditionalPoliciesFile: ./rbac-conditions/rbac-conditional-policies.yaml
           admin:
             superUsers:
               - name: user:default/christoph-jerolimov
+            users:
+              - name: user:default/rhdh-qe
 
-  # reduce memoty usage
+  # reduce memory usage
   postgresql:
     primary:
       resources:

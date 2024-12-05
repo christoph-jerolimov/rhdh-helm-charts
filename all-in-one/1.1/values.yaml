@@ -26,34 +26,26 @@ upstream:
   backstage:
     image:
       registry: registry.redhat.io
-      repository: rhdh/rhdh-hub-rhel9@sha256
-      tag: d2889b704e21cb0fbea9f0df4420ce3919b65c0ed93e2041947b0beb4b31f1fc
+      repository: rhdh/rhdh-hub-rhel9
+      tag: 1.1-107.1717076948
       pullPolicy: Always
 
     appConfig:
       app:
         baseUrl: 'https://{{- include "janus-idp.hostname" . }}'
-        # https://docs.redhat.com/en/documentation/red_hat_developer_hub/1.2/html/getting_started_with_red_hat_developer_hub/assembly-customize-rhdh-theme#proc-customize-rhdh-branding_assembly-customize-rhdh-theme
+        # https://docs.redhat.com/en/documentation/red_hat_developer_hub/1.1/html/getting_started_with_red_hat_developer_hub/ref-additional-rhdh-customizations_rhdh-getting-started
         branding:
           theme:
             light:
-              palette:
-                primary:
-                  main: '#00ff00'
-                navigation:
-                  indicator: '#00ffff'
-              pageTheme:
-                default:
-                  backgroundColor: ['#00ff00', '#0000ff']
+              primaryColor: ''
+              headerColor1: ''
+              headerColor2: ''
+              navigationIndicatorColor: ''
             dark:
-              palette:
-                primary:
-                  main: '#00ff00'
-                navigation:
-                  indicator: '#00ffff'
-              pageTheme:
-                default:
-                  backgroundColor: ['#00ff00', '#0000ff']
+              primaryColor: ''
+              headerColor1: ''
+              headerColor2: ''
+              navigationIndicatorColor: ''
 
       backend:
         baseUrl: 'https://{{- include "janus-idp.hostname" . }}'

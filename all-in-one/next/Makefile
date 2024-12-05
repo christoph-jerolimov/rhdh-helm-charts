@@ -5,7 +5,7 @@ chart-name=openshift-helm-charts/redhat-developer-hub
 chart-version=1.3
 
 release-name=redhat-developer-hub
-release-namespace=rhdh-all-in-one-1-4-test
+release-namespace=rhdh-all-in-one-next-test
 
 cluster-route-suffix != ../../scripts/get-cluster-route-suffix.sh
 
@@ -18,6 +18,7 @@ install:
 		--set "global.clusterRouterBase=${cluster-route-suffix}" \
 		--values ../../github.local.yaml \
 		--values ../../kubernetes.local.yaml \
+		--values ../../acr.local.yaml \
 		--values values.yaml
 
 uninstall:

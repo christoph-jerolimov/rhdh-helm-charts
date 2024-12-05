@@ -1,6 +1,10 @@
-# Some [RHDH](https://developers.redhat.com/rhdh) experiments 🧪
+# Some [RHDH](https://developers.redhat.com/rhdh) helm-charts for testing purpose 🧪
 
-For [Backstage](https://backstage.io/) experiments see https://github.com/christoph-jerolimov/backstage-experiments
+> [!TIP]
+> For some other RHDH experiments see https://github.com/christoph-jerolimov/rhdh-experiments
+
+> [!TIP]
+> For some [Backstage](https://backstage.io/) experiments see https://github.com/christoph-jerolimov/backstage-experiments
 
 ## Helm Charts
 
