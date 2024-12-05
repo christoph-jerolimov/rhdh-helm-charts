@@ -1,11 +1,5 @@
 # Some [RHDH](https://developers.redhat.com/rhdh) helm-charts for testing purpose 🧪
 
-> [!TIP]
-> For some other RHDH experiments see https://github.com/christoph-jerolimov/rhdh-experiments
-
-> [!TIP]
-> For some [Backstage](https://backstage.io/) experiments see https://github.com/christoph-jerolimov/backstage-experiments
-
 ## How to use it
 
 1. Clone repo or pick up a folder as an example for your own helm chart
@@ -37,3 +31,7 @@ cd all-in-one/next
 make
 ```
 
+## Links
+
+* For some other RHDH experiments see https://github.com/christoph-jerolimov/rhdh-experiments
+* For some Backstage experiments see https://github.com/christoph-jerolimov/backstage-experiments
