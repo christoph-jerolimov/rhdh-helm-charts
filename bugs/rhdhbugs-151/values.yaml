@@ -20,6 +20,10 @@ upstream:
             target: https://github.com/christoph-jerolimov/janus/blob/main/test-catalog/all.yaml
             rules:
               - allow: [Component, System, API, Resource, Location, User, Group]
+          - type: url
+            target: https://github.com/christoph-jerolimov/rhdh-helm-charts/blob/main/bugs/rhdhbugs-151/template.yaml
+            rules:
+              - allow: [Template]
 
       permission:
         enabled: true
