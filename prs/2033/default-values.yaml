@@ -29,6 +29,8 @@ global:
 # -- Upstream Backstage [chart configuration](https://github.com/backstage/charts/blob/main/charts/backstage/values.yaml)
 # @default -- Use Openshift compatible settings
 upstream:
+  # upstream.nameOverride affects the resources created by the upstream Backstage Chart,
+  # like the baseUrl fields set in the app-config ConfigMap created by that Chart.
   nameOverride: developer-hub
   backstage:
     image:
@@ -37,7 +39,7 @@ upstream:
       # tag is set to digest via prepare.sh script
       # tag: "${RHDH_DIGEST}"
 
-      tag: 0b95eb835576eb3b093695168fb78672f9d378ad027eb0298d807e232c021c09
+      tag: 48edcf6f736e17f33d3630ce2fddc19e95316b7824a7af24e9f0df48ac4f4fe3
     command: []
     # FIXME (tumido): USE POSTGRES_PASSWORD and POSTGRES_USER instead of POSTGRES_ADMIN_PASSWORD
     # This is a hack. In {fedora,rhel}/postgresql images, regular user is forbidden
@@ -47,6 +49,8 @@ upstream:
     # create multiple DBs. Since Backstage requires by default 5 different DBs, we
     # can't accommodate that properly.
     appConfig:
+      auth:
+        providers: {}
       app:
         # Please update to match host in case you don't want to configure hostname via `global.clusterRouterBase` or `global.host` if not deploying on an openshift cluster.
         baseUrl: 'https://{{- include "janus-idp.hostname" . }}'
@@ -79,26 +83,46 @@ upstream:
         cpu: 1000m
         memory: 2.5Gi
         ephemeral-storage: 5Gi
+    startupProbe:
+      # This gives enough time upon container startup before the liveness and readiness probes are triggered.
+      # Giving (120s = initialDelaySeconds + failureThreshold * periodSeconds) to account for the worst case scenario.
+      httpGet:
+        path: /.backstage/health/v1/liveness
+        port: backend
+        scheme: HTTP
+      initialDelaySeconds: 30
+      timeoutSeconds: 4
+      periodSeconds: 20
+      successThreshold: 1
+      failureThreshold: 3
     readinessProbe:
       failureThreshold: 3
       httpGet:
-        path: /healthcheck
-        port: 7007
+        path: /.backstage/health/v1/readiness
+        port: backend
         scheme: HTTP
-      initialDelaySeconds: 30
+      # Both liveness and readiness probes won't be triggered until the startup probe is successful.
+      # The startup probe is already configured to give enough time for the application to be started.
+      # So removing the additional delay here allows the readiness probe to be checked right away after the startup probe,
+      # which helps make the application available faster to the end-user.
+      # initialDelaySeconds: 30
       periodSeconds: 10
       successThreshold: 2
-      timeoutSeconds: 2
+      timeoutSeconds: 4
     livenessProbe:
       failureThreshold: 3
       httpGet:
-        path: /healthcheck
-        port: 7007
+        path: /.backstage/health/v1/liveness
+        port: backend
         scheme: HTTP
-      initialDelaySeconds: 60
+      # Both liveness and readiness probes won't be triggered until the startup probe is successful.
+      # The startup probe is already configured to give enough time for the application to be started.
+      # So removing the additional delay here allows the liveness probe to be checked right away after the startup probe,
+      # which helps make the application available faster to the end-user.
+      # initialDelaySeconds: 60
       periodSeconds: 10
       successThreshold: 1
-      timeoutSeconds: 2
+      timeoutSeconds: 4
     extraEnvVars:
       - name: BACKEND_SECRET
         valueFrom:
@@ -118,16 +142,10 @@ upstream:
       # The initContainer below will install dynamic plugins in this volume mount.
       - name: dynamic-plugins-root
         mountPath: /opt/app-root/src/dynamic-plugins-root
-      # Audit Log data will be stored in this volume mount.
-      - name: audit-log-data
-        mountPath: /var/log/audit
     extraVolumes:
       - name: dynamic-plugins-root
         persistentVolumeClaim:
           claimName: '{{ printf "%s-dynamic-plugins-root" .Release.Name }}'
-      - name: audit-log-data
-        persistentVolumeClaim:
-          claimName: '{{ printf "%s-audit-log" .Release.Name }}'
       # Volume that will expose the `dynamic-plugins.yaml` file from the `dynamic-plugins` config map.
       # The `dynamic-plugins` config map is created by the helm chart from the content of the `global.dynamic` field.
       - name: dynamic-plugins
@@ -200,6 +218,13 @@ upstream:
     podAnnotations:
       checksum/dynamic-plugins: >-
         {{- include "common.tplvalues.render" ( dict "value" .Values.global.dynamic "context" $) | sha256sum }}
+  ingress:
+    host: "{{ .Values.global.host }}"
+  metrics:
+    serviceMonitor:
+      enabled: false
+      path: /metrics
+      port: http-metrics
   postgresql:
     enabled: true
     postgresqlDataDir: /var/lib/pgsql/data/userdata
@@ -209,7 +234,7 @@ upstream:
       # tag is set to digest via prepare.sh script
       # tag: "${POSTGRESQL_DIGEST}"
 
-      tag: 10475924583aba63c50b00337b4097cdad48e7a8567fd77f400b278ad1782bfc
+      tag: fc7aaeffdb278dca57b2354121bc8331be4ce7d4220e4c89b1ce8d67d3e6f555
     auth:
       secretKeys:
         adminPasswordKey: postgres-password
@@ -238,8 +263,11 @@ upstream:
             secretKeyRef:
               key: postgres-password
               name: '{{- include "postgresql.v1.secretName" . }}'
-  ingress:
-    host: "{{ .Values.global.host }}"
+  service:
+    extraPorts:
+      - name: http-metrics
+        port: 9464
+        targetPort: 9464
 # -- OpenShift Route parameters
 route:
   # -- Route specific annotations
@@ -271,4 +299,10 @@ route:
     # --  Indicates the desired behavior for insecure connections to a route.
     # <br /> While each router may make its own decisions on which ports to expose, this is normally port 80. The only valid values are None, Redirect, or empty for disabled.
     insecureEdgeTerminationPolicy: "Redirect"
+# RHIDP-3115: nameOverride affects the resources created by the RHDH Chart,
+# like the Route host created on OCP.
+# It needs to match the value provided in 'upstream.nameOverride'
+# to have consistent behavior between the Route and the URLs
+# from the app-config ConfigMap managed by the Chart.
+nameOverride: developer-hub
 
