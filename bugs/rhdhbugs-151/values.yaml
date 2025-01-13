@@ -25,6 +25,13 @@ upstream:
             rules:
               - allow: [Template]
 
+      proxy:
+        endpoints:
+          '/httpbin':
+            target: 'https://httpbin.org/'
+            credentials: require
+            changeOrigin: true
+
       permission:
         enabled: true
         rbac:
