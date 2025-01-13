@@ -29,11 +29,11 @@ upstream:
         endpoints:
           '/httpbin':
             target: 'https://httpbin.org/'
-            credentials: require
+            credentials: dangerously-allow-unauthenticated
             changeOrigin: true
 
       permission:
-        enabled: true
+        enabled: false
         rbac:
           pluginsWithPermission:
             - bulk-import
