@@ -67,7 +67,7 @@ upstream:
             superUsers:
               - name: user:default/christoph-jerolimov
 
-  # reduce memoty usage
+  # reduce memory usage
   postgresql:
     primary:
       resources:
