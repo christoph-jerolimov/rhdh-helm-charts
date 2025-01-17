@@ -8,7 +8,7 @@ spec:
   type: service
 
   steps:
-    - id: backstage-request
+    - id: backstage_request
       name: backstage request
       action: http:backstage:request
       input:
@@ -24,17 +24,17 @@ spec:
       input:
         message: |
           **Status code:**
-          ${{ steps.backstage-request.output.code }}
+          ${{ steps.backstage_request.output.code }}
 
           **User-Agent:**
-          ${{ steps.backstage-request.output.headers["user-agent"] }}
+          ${{ steps.backstage_request.output.headers["user-agent"] }}
 
   output:
     text:
       - title: Response
         content: |
           **Status code:**
-          ${{ steps.backstage-request.output.code }}
+          ${{ steps.backstage_request.output.code }}
 
           **User-Agent:**
-          ${{ steps.backstage-request.output.headers["user-agent"] }}
+          ${{ steps.backstage_request.output.headers["user-agent"] }}
