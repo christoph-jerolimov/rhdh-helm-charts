@@ -1,0 +1,160 @@
+global:
+  dynamic:
+    plugins:
+      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-rbac
+        disabled: false
+      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-bulk-import
+        disabled: false
+      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-bulk-import-backend-dynamic
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-plugin-tech-radar
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-plugin-kubernetes
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-plugin-kubernetes-backend-dynamic
+        disabled: false
+      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-tekton
+        disabled: false
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              janus-idp.backstage-plugin-tekton:
+                mountPoints:
+                  - mountPoint: entity.page.ci/cards
+                    importName: TektonCI
+                    config:
+                      layout:
+                        gridColumn:
+                          lg: 6 / -1
+                          xs: 1 / -1
+                      if:
+                        allOf:
+                          - isTektonCIAvailable
+                  - mountPoint: entity.page.ci/cards
+                    importName: TektonCI
+                    config:
+                      layout:
+                        gridColumn:
+                          lg: 6 / -1
+                          xs: 1 / -1
+                      if:
+                        allOf:
+                          - isTektonCIAvailable
+
+      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-topology
+        disabled: false
+
+        # pluginConfig:
+        #   dynamicPlugins:
+        #     frontend:
+        #       backstage-community.plugin-topology:
+        #         entityTabs:
+        #           - path: /topology
+        #             title: Topology Test
+        #             mountPoint: entity.page.topology
+
+      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-acr
+        disabled: false
+      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-jfrog-artifactory
+        disabled: false
+      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-nexus-repository-manager
+        disabled: false
+      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-quay
+        disabled: false
+
+upstream:
+  backstage:
+    image:
+      registry: registry.redhat.io
+      repository: rhdh/rhdh-hub-rhel9@sha256
+      tag: ccc2f05dd6dacbe9b39bbe5b4774ef9d61b872fa7c26e47c0c63d260920ad436
+      pullPolicy: Always
+
+    appConfig:
+      catalog:
+        rules:
+          - allow: [Component, System, API, Resource, Location]
+        locations:
+          - type: url
+            target: https://github.com/christoph-jerolimov/janus/blob/main/test-catalog/all.yaml
+            rules:
+              - allow: [Component, System, API, Resource, Location, User, Group]
+
+      dynamicPlugins:
+        frontend:
+          default.main-menu-items:
+            menuItems:
+              default.home:
+                title: Home (changed)
+
+          backstage-community.plugin-topology2:
+            entityTabs:
+              - path: /topology
+                title: Changed Topology
+                mountPoint: entity.page.topology
+              - path: /
+                title: Changed Overview
+                mountPoint: entity.page.overview
+              - path: /issues
+                title: Changed Issues
+                mountPoint: entity.page.issues
+              - path: /pr
+                title: Changed Pull/Merge Requests
+                mountPoint: entity.page.pull-requests
+              - path: /ci
+                title: Changed CI
+                mountPoint: entity.page.ci
+              - path: /cd
+                title: Changed CD
+                mountPoint: entity.page.cd
+              - path: /kubernetes
+                title: Changed Kubernetes
+                mountPoint: entity.page.kubernetes
+              - path: /image-registry
+                title: Changed Image Registry
+                mountPoint: entity.page.image-registry
+              - path: /monitoring
+                title: Changed Monitoring
+                mountPoint: entity.page.monitoring
+              - path: /lighthouse
+                title: Changed Lighthouse
+                mountPoint: entity.page.lighthouse
+              - path: /api
+                title: Changed Api
+                mountPoint: entity.page.api
+              - path: /dependencies
+                title: Changed Dependencies
+                mountPoint: entity.page.dependencies
+              - path: /docs
+                title: Changed Docs
+                mountPoint: entity.page.docs
+              - path: /definition
+                title: Changed Definition
+                mountPoint: entity.page.definition
+              - path: /system
+                title: Changed Diagram
+                mountPoint: entity.page.diagram
+
+      permission:
+        enabled: true
+        rbac:
+          pluginsWithPermission:
+            # - kubernetes
+            - bulk-import
+            - catalog
+            # - scaffolder
+            # - policy
+          admin:
+            superUsers:
+              - name: user:default/christoph-jerolimov
+
+  # reduce memory usage
+  postgresql:
+    primary:
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 250m
+          memory: 256Mi
