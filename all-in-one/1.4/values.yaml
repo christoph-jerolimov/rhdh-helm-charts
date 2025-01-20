@@ -52,6 +52,12 @@ upstream:
                 title: Home (changed)
 
           janus-idp.backstage-plugin-dynamic-home-page:
+            dynamicRoutes:
+              - path: /
+                importName: DynamicHomePage
+                config:
+                  props:
+                    title: Howdy!
             mountPoints:
               - mountPoint: home.page/cards
                 importName: SearchBar
@@ -258,6 +264,12 @@ upstream:
                     xxs: { w: 6, h: 4, x: 6 }
 
           red-hat-developer-hub.backstage-plugin-dynamic-home-page:
+            dynamicRoutes:
+              - path: /
+                importName: DynamicHomePage
+                config:
+                  props:
+                    title: Howdy!
             mountPoints:
               - mountPoint: home.page/cards
                 importName: SearchBar
