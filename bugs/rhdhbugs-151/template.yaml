@@ -26,7 +26,13 @@ spec:
           **Status code:**
           ${{ steps.backstage_request.output.code }}
 
-          **User-Agent:**
+          **Response content-type:**
+          ${{ steps.backstage_request.output.headers['content-type'] }}
+
+          **User-Agent from httpbin response:**
+          ${{ steps.backstage_request.body.headers['User-Agent''] }}
+
+          **Full output:**
           ${{ steps.backstage_request.output | dump }}
 
   output:
@@ -36,5 +42,11 @@ spec:
           **Status code:**
           ${{ steps.backstage_request.output.code }}
 
-          **User-Agent:**
+          **Response content-type:**
+          ${{ steps.backstage_request.output.headers['content-type'] }}
+
+          **User-Agent from httpbin response:**
+          ${{ steps.backstage_request.body.headers['User-Agent''] }}
+
+          **Full output:**
           ${{ steps.backstage_request.output | dump }}
