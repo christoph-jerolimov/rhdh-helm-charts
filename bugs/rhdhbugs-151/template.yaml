@@ -30,7 +30,7 @@ spec:
           ${{ steps.backstage_request.output.headers['content-type'] }}
 
           **User-Agent from httpbin response:**
-          ${{ steps.backstage_request.body.headers['User-Agent''] }}
+          ${{ steps.backstage_request.body.headers['User-Agent'] }}
 
           **Full output:**
           ${{ steps.backstage_request.output | dump }}
@@ -46,7 +46,7 @@ spec:
           ${{ steps.backstage_request.output.headers['content-type'] }}
 
           **User-Agent from httpbin response:**
-          ${{ steps.backstage_request.body.headers['User-Agent''] }}
+          ${{ steps.backstage_request.body.headers['User-Agent'] }}
 
           **Full output:**
           ${{ steps.backstage_request.output | dump }}
