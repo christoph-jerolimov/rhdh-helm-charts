@@ -1,0 +1,69 @@
+global:
+  dynamic:
+    plugins:
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-topology
+        disabled: false
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              backstage-community.plugin-topology:
+                entityTabs:
+                  - path: /topology
+                    title: Changed Topology Tab Name
+                    mountPoint: entity.page.topology
+                mountPoints:
+                  - mountPoint: entity.page.topology/cards
+                    importName: TopologyPage
+                    config:
+                      layout:
+                        gridColumn: "1 / -1"
+                        height: 75vh
+                      if:
+                        anyOf:
+                          - hasAnnotation: backstage.io/kubernetes-id
+                          - hasAnnotation: backstage.io/kubernetes-namespace
+
+upstream:
+  backstage:
+    image:
+      registry: quay.io
+      repository: janus-idp/backstage-showcase
+      tag: next
+      pullPolicy: Always
+
+    appConfig:
+      catalog:
+        rules:
+          - allow: [Component, System, API, Resource, Location]
+        locations:
+          - type: url
+            target: https://github.com/christoph-jerolimov/janus/blob/main/test-catalog/all.yaml
+            rules:
+              - allow: [Component, System, API, Resource, Location, User, Group]
+
+      permission:
+        enabled: true
+        rbac:
+          pluginsWithPermission:
+            - catalog
+            - permission
+            - scaffolder
+          # policyFileReload: true
+          # policies-csv-file: ./rbac/rbac-policies.csv
+          # conditionalPoliciesFile: ./rbac-conditions/rbac-conditional-policies.yaml
+          admin:
+            superUsers:
+              - name: user:default/christoph-jerolimov
+            users:
+              - name: user:default/rhdh-qe
+
+  # reduce memory usage
+  postgresql:
+    primary:
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 250m
+          memory: 256Mi
