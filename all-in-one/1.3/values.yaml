@@ -31,7 +31,7 @@ upstream:
     image:
       registry: registry.redhat.io
       repository: rhdh/rhdh-hub-rhel9@sha256
-      tag: ccc2f05dd6dacbe9b39bbe5b4774ef9d61b872fa7c26e47c0c63d260920ad436
+      tag: a33afc3b33655cdbc4532a420408c4966dc8a74fc8216a9ad8bdb2bbd18942f6
       pullPolicy: Always
 
     appConfig:
