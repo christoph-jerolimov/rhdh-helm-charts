@@ -17,12 +17,72 @@ spec:
           ui:disabled: true
 
   steps:
-    - id: backstage_request
+    - id: request1
       name: backstage request
       action: http:backstage:request
       input:
         method: 'GET'
-        path: '/proxy/httpbin/delay/35'
+        path: '/proxy/httpbin/delay/10'
+        headers:
+          test: 'hello'
+          foo: 'bar'
+
+    - id: request2
+      name: backstage request
+      action: http:backstage:request
+      input:
+        method: 'GET'
+        path: '/proxy/httpbin/delay/10'
+        headers:
+          test: 'hello'
+          foo: 'bar'
+
+    - id: request3
+      name: backstage request
+      action: http:backstage:request
+      input:
+        method: 'GET'
+        path: '/proxy/httpbin/delay/10'
+        headers:
+          test: 'hello'
+          foo: 'bar'
+
+    - id: request4
+      name: backstage request
+      action: http:backstage:request
+      input:
+        method: 'GET'
+        path: '/proxy/httpbin/delay/10'
+        headers:
+          test: 'hello'
+          foo: 'bar'
+
+    - id: request5
+      name: backstage request
+      action: http:backstage:request
+      input:
+        method: 'GET'
+        path: '/proxy/httpbin/delay/10'
+        headers:
+          test: 'hello'
+          foo: 'bar'
+
+    - id: request6
+      name: backstage request
+      action: http:backstage:request
+      input:
+        method: 'GET'
+        path: '/proxy/httpbin/delay/10'
+        headers:
+          test: 'hello'
+          foo: 'bar'
+
+    - id: request7
+      name: backstage request
+      action: http:backstage:request
+      input:
+        method: 'GET'
+        path: '/proxy/httpbin/delay/10'
         headers:
           test: 'hello'
           foo: 'bar'
@@ -33,29 +93,47 @@ spec:
       input:
         message: |
           **Status code:**
-          ${{ steps.backstage_request.output.code }}
+          ${{ steps.request1.output.code }}
 
-          **Response content-type:**
-          ${{ steps.backstage_request.output.headers['content-type'] }}
+          **Status code:**
+          ${{ steps.request2.output.code }}
 
-          **User-Agent from httpbin response:**
-          ${{ steps.backstage_request.output.body.headers['User-Agent'] }}
+          **Status code:**
+          ${{ steps.request3.output.code }}
 
-          **Full output:**
-          ${{ steps.backstage_request.output | dump }}
+          **Status code:**
+          ${{ steps.request4.output.code }}
+
+          **Status code:**
+          ${{ steps.request5.output.code }}
+
+          **Status code:**
+          ${{ steps.request6.output.code }}
+
+          **Status code:**
+          ${{ steps.request7.output.code }}
 
   output:
     text:
       - title: Response
         content: |
           **Status code:**
-          ${{ steps.backstage_request.output.code }}
+          ${{ steps.request1.output.code }}
 
-          **Response content-type:**
-          ${{ steps.backstage_request.output.headers['content-type'] }}
+          **Status code:**
+          ${{ steps.request2.output.code }}
 
-          **User-Agent from httpbin response:**
-          ${{ steps.backstage_request.output.body.headers['User-Agent'] }}
+          **Status code:**
+          ${{ steps.request3.output.code }}
 
-          **Full output:**
-          ${{ steps.backstage_request.output | dump }}
+          **Status code:**
+          ${{ steps.request4.output.code }}
+
+          **Status code:**
+          ${{ steps.request5.output.code }}
+
+          **Status code:**
+          ${{ steps.request6.output.code }}
+
+          **Status code:**
+          ${{ steps.request7.output.code }}
