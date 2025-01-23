@@ -22,7 +22,7 @@ spec:
       action: http:backstage:request
       input:
         method: 'GET'
-        path: '/proxy/httpbin/headers'
+        path: '/proxy/httpbin/delay/35'
         headers:
           test: 'hello'
           foo: 'bar'
