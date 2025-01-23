@@ -1,0 +1,61 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: HTTP-testing
+  title: Http testing for post/get
+  description: Testing get functionality with get
+spec:
+  type: service
+
+  parameters:
+    - title: Fill in some steps
+      properties:
+        name:
+          title: Name
+          type: string
+          description: Unique name of the component
+          ui:disabled: true
+
+  steps:
+    - id: backstage_request
+      name: backstage request
+      action: http:backstage:request
+      input:
+        method: 'GET'
+        path: '/proxy/httpbin/headers'
+        headers:
+          test: 'hello'
+          foo: 'bar'
+
+    - id: log-response
+      name: Log response
+      action: debug:log
+      input:
+        message: |
+          **Status code:**
+          ${{ steps.backstage_request.output.code }}
+
+          **Response content-type:**
+          ${{ steps.backstage_request.output.headers['content-type'] }}
+
+          **User-Agent from httpbin response:**
+          ${{ steps.backstage_request.output.body.headers['User-Agent'] }}
+
+          **Full output:**
+          ${{ steps.backstage_request.output | dump }}
+
+  output:
+    text:
+      - title: Response
+        content: |
+          **Status code:**
+          ${{ steps.backstage_request.output.code }}
+
+          **Response content-type:**
+          ${{ steps.backstage_request.output.headers['content-type'] }}
+
+          **User-Agent from httpbin response:**
+          ${{ steps.backstage_request.output.body.headers['User-Agent'] }}
+
+          **Full output:**
+          ${{ steps.backstage_request.output | dump }}
