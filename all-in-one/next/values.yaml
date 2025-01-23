@@ -32,7 +32,7 @@ upstream:
       registry: quay.io
       repository: rhdh-community/rhdh
       tag: next
-      pullPolicy: Always
+      pullPolicy: IfNotPresent
 
     appConfig:
       catalog:

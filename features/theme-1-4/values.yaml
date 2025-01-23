@@ -4,7 +4,7 @@ upstream:
       registry: quay.io
       repository: janus-idp/backstage-showcase
       tag: next
-      pullPolicy: Always
+      pullPolicy: IfNotPresent
     appConfig:
       app:
         branding:

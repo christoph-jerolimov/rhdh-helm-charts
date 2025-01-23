@@ -32,7 +32,7 @@ upstream:
       registry: registry.redhat.io
       repository: rhdh/rhdh-hub-rhel9@sha256
       tag: a33afc3b33655cdbc4532a420408c4966dc8a74fc8216a9ad8bdb2bbd18942f6
-      pullPolicy: Always
+      pullPolicy: IfNotPresent
 
     appConfig:
       app:
