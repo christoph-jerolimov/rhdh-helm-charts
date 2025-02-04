@@ -31,7 +31,7 @@ upstream:
     image:
       registry: quay.io
       repository: rhdh-community/rhdh
-      tag: next
+      tag: pr-2309-27b1abb5
       pullPolicy: IfNotPresent
 
     appConfig:
