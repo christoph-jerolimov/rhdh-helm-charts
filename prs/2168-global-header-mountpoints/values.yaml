@@ -1,0 +1,80 @@
+global:
+  dynamic:
+    plugins:
+      - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-global-header
+        disabled: false
+      - package: '@red-hat-developer-hub/backstage-plugin-global-header-test@0.0.2'
+        integrity: 'sha512-Dlay4DUAC3SifSJx4dmKDeD07DITGX9ZZ2SMCgcMMc00GJVKToD3DFuPYZ7lV2C2Ve7gWDufCf5NUmqaUWf6GA=='
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              red-hat-developer-hub.backstage-plugin-global-header-test:
+                mountPoints:
+                  - mountPoint: application/header
+                    importName: CrashHeader
+                    config:
+                      layout:
+                        position: above-main-content
+                  - mountPoint: application/header
+                    importName: CrashHeader
+                    config:
+                      layout:
+                        position: above-sidebar
+
+upstream:
+  backstage:
+    image:
+      registry: quay.io
+      repository: rhdh-community/rhdh
+      tag: pr-2168
+      pullPolicy: IfNotPresent
+
+    appConfig:
+      catalog:
+        rules:
+          - allow: [Component, System, API, Resource, Location]
+        locations:
+          - type: url
+            target: https://github.com/christoph-jerolimov/janus/blob/main/test-catalog/all.yaml
+            rules:
+              - allow: [Component, System, API, Resource, Location, User, Group]
+
+          - type: url
+            target: https://github.com/redhat-developer/rhdh-plugins/blob/main/workspaces/marketplace/examples/all-orgs.yaml
+            rules:
+              - allow: [Group]
+          - type: url
+            target: https://github.com/redhat-developer/rhdh-plugins/blob/main/workspaces/marketplace/examples/all-plugins.yaml
+            rules:
+              - allow: [Plugin]
+          - type: url
+            target: https://github.com/redhat-developer/rhdh-plugins/blob/main/workspaces/marketplace/examples/all-pluginlists.yaml
+            rules:
+              - allow: [PluginList]
+
+      permission:
+        enabled: true
+        rbac:
+          pluginsWithPermission:
+            - catalog
+            - permission
+            - scaffolder
+          # policyFileReload: true
+          # policies-csv-file: ./rbac/rbac-policies.csv
+          # conditionalPoliciesFile: ./rbac-conditions/rbac-conditional-policies.yaml
+          admin:
+            superUsers:
+              - name: user:default/christoph-jerolimov
+            users:
+              - name: user:default/rhdh-qe
+
+  # reduce memory usage
+  postgresql:
+    primary:
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 250m
+          memory: 256Mi
