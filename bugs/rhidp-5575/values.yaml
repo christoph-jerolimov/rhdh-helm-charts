@@ -1,0 +1,309 @@
+global:
+  dynamic:
+    plugins:
+      # Dynamic Home Page
+      - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-dynamic-home-page
+        disabled: false
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              red-hat-developer-hub.backstage-plugin-dynamic-home-page:
+                dynamicRoutes:
+                  - path: /
+                    importName: DynamicHomePage
+                    config: 
+                      props: 
+                        title: Red Hat Developer Hub
+                mountPoints:
+                  - mountPoint: home.page/cards
+                    importName: SearchBar
+                    config:
+                      layouts:
+                        xl:  { w: 12, h: 1 }
+                        lg:  { w: 12, h: 1 }
+                        md:  { w: 12, h: 1 }
+                        sm:  { w: 12, h: 1 }
+                        xs:  { w: 12, h: 1 }
+                        xxs: { w: 12, h: 1 }
+                  - mountPoint: home.page/cards
+                    importName: QuickAccessCard
+                    config:
+                      layouts:
+                        xl:  { w:  6, h: 6 }
+                        lg:  { w:  6, h: 6 }
+                        md:  { w:  6, h: 6 }
+                        sm:  { w: 12, h: 6 }
+                        xs:  { w: 12, h: 6 }
+                        xxs: { w: 12, h: 6 }
+                  - mountPoint: home.page/cards
+                    importName: CatalogStarredEntitiesCard
+                    config:
+                      layouts:
+                        xl:  { w:  6, h: 6, x: 6 }
+                        lg:  { w:  6, h: 6, x: 6 }
+                        md:  { w:  6, h: 6, x: 6 }
+                        sm:  { w: 12, h: 6 }
+                        xs:  { w: 12, h: 6 }
+                        xxs: { w: 12, h: 6 }              
+                  - mountPoint: home.page/cards
+                    importName: MarkdownCard
+                    config:
+                      layouts:
+                        xl:  { w: 6, h: 6 }
+                        lg:  { w: 6, h: 6 }
+                        md:  { w: 6, h: 6 }
+                        sm:  { w: 12, h: 6 }
+                        xs:  { w: 12, h: 6 }
+                        xxs: { w: 12, h: 6 }
+                      props:
+                        showBorder: true
+                        title: 'Getting Started With Red Hat Developer Hub'
+                        content: |
+                          | **Resource**             | **Description**                                                                                        | **Link**                                                                                    |
+                          |--------------------------|--------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+                          | **Website**              | Official website providing an overview and insights into Red Hat Developer Hub (RHDH).                 | [Website](https://developers.redhat.com/rhdh/overview)                                      |
+                          | **Docs**                 | Comprehensive documentation for Red Hat Developer Hub, including setup, features, and usage guides.    | [Docs](https://docs.redhat.com/en/documentation/red_hat_developer_hub/)                     |
+                          | **GitHub**               | Repository containing the source code for the Red Hat Developer Hub.                                   | [GitHub](https://github.com/redhat-developer/rhdh)                                          |
+                          | **Plugins GitHub**       | Collection of plugins designed to extend and enhance the Red Hat Developer Hub.                        | [Plugins GitHub](https://github.com/redhat-developer/rhdh-plugins)                          |
+                          | **Community Plugins**    | GitHub repository for community-developed plugins that integrate with Backstage and related platforms. | [Community Plugins GitHub](https://github.com/backstage/community-plugins)                  |
+
+
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-rbac
+        disabled: false
+      - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-bulk-import
+        disabled: false
+      - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-bulk-import-backend-dynamic
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-tech-radar
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-plugin-kubernetes
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-plugin-kubernetes-backend-dynamic
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-tekton
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-topology
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-acr
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-jfrog-artifactory
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-nexus-repository-manager
+        disabled: false
+
+      - package: ./dynamic-plugins/dist/backstage-plugin-scaffolder-backend-module-github-dynamic
+        disabled: false
+      - package:  ./dynamic-plugins/dist/backstage-community-plugin-github-issues
+        disabled: false
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              backstage-community.plugin-github-issues:
+                mountPoints:
+                  - mountPoint: entity.page.issues/cards
+                    importName: GithubIssuesCard
+                    config:
+                      layout:
+                        gridColumn: "1 / -1"
+                      if:
+                        allOf:
+                          - hasAnnotation: github.com/project-slug
+      - package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-github-pull-requests
+        disabled: false
+
+      - package: ./dynamic-plugins/dist/backstage-plugin-signals-backend-dynamic
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-plugin-signals
+        disabled: false
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              backstage.plugin-signals: {}
+
+      - package: ./dynamic-plugins/dist/backstage-plugin-notifications
+        disabled: false
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              backstage.plugin-notifications:
+                dynamicRoutes:
+                  - importName: NotificationsPage
+                    menuItem:
+                      config:
+                        props:
+                          titleCounterEnabled: true
+                          webNotificationsEnabled: false
+                      importName: NotificationsSidebarItem
+                    path: /notifications
+      - package: ./dynamic-plugins/dist/backstage-plugin-notifications-backend-dynamic
+        disabled: false
+
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-quay
+        disabled: false
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              backstage-community.plugin-quay:
+                mountPoints:
+                  - mountPoint: entity.page.image-registry/cards
+                    importName: QuayPage
+                    config:
+                      layout:
+                        gridColumn: 1 / -1
+                      if:
+                        anyOf:
+                        - isQuayAvailable
+
+      - package: oci://quay.io/karthik_jk/lightspeed:v0.2.5!red-hat-developer-hub-backstage-plugin-lightspeed
+        disabled: false
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              red-hat-developer-hub.backstage-plugin-lightspeed:
+                appIcons:
+                  - name: LightspeedIcon
+                    module: LightspeedPlugin
+                    importName: LightspeedIcon
+                dynamicRoutes:
+                  - path: /lightspeed
+                    importName: LightspeedPage
+                    module: LightspeedPlugin
+                    menuItem:
+                      icon: LightspeedIcon
+                      text: Lightspeed
+      - package: oci://quay.io/karthik_jk/lightspeed:v0.2.2!red-hat-developer-hub-backstage-plugin-lightspeed-backend-dynamic
+        disabled: false
+        pluginConfig:
+          lightspeed:
+            servers:
+              - id: ollama
+                url: ${LIGHTSPEED_API_URL} 
+                token: ${LIGHTSPEED_API_TOKEN} 
+      # Feedback
+      - package: '@janus-idp/backstage-plugin-feedback-backend-dynamic'
+        integrity: 'sha256-uYJ0EeBZUgntaELJLxs4ArKZD7W7HTuTCFnImFayrBY='
+        pluginConfig:
+          feedback:
+            # A ref to base entity under which global feedbacks gets stored
+            # in format: kind:namespace/name
+            baseEntityRef: 'system:default/red-hat-developer-hub' # This entity needs 2 annotations adding!
+            summaryLimit: 240
+            integrations:
+              jira:
+                - host: 'https://issues.redhat.com'
+                  token: Bearer testtest
+              email:
+                host: ${EMAIL_HOSTNAME}
+                port: ${EMAIL_PORT} #587
+                from: ${EMAIL_SENDER}
+                auth: 
+                  user: ${EMAIL_USER}
+                  password: ${EMAIL_PASSWORD}
+                secure: false # bypass the self-signed certs for the smtp host
+
+      - package: '@janus-idp/backstage-plugin-feedback'
+        integrity: 'sha256-6tzhUe0U13JU833yXw0zsaP+CtnwTz6LwWLfUTAVWFQ='
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              janus-idp.backstage-plugin-feedback:
+                appIcons:
+                  - name: feedbackIcon
+                    importName: FeedbackIcon
+                dynamicRoutes:
+                  - path: /feedback
+                    importName: GlobalFeedbackPage
+                    menuItem:
+                      icon: feedbackIcon
+                      text: Feedback
+                routeBindings:
+                  targets:
+                    - importName: feedbackPlugin
+                  bindings:
+                    - bindTarget: feedbackPlugin.externalRoutes
+                      bindMap:
+                        viewDocs: techdocsPlugin.routes.root
+                entityTabs:
+                  - path: '/feedback'
+                    title: Feedback
+                    mountPoint: entity.page.feedback
+                mountPoints:
+                  - mountPoint: entity.page.feedback/cards
+                    importName: EntityFeedbackPage
+                    config:
+                      layout:
+                        gridColumn: "1 / -1"
+                      if:
+                        anyOf:
+                          - hasAnnotation: feedback/type
+
+      # Jenkins
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-jenkins-backend-dynamic
+        disabled: false
+        pluginConfig:
+          jenkins:
+            instances:
+              - name: default
+                baseUrl: ${JENKINS_URL}
+                username: ${JENKINS_USERNAME}
+                apiKey: ${JENKINS_TOKEN}
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-jenkins
+        disabled: false
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              backstage-community.plugin-jenkins:
+                mountPoints:
+                  - mountPoint: entity.page.ci/cards
+                    importName: EntityJenkinsContent
+                    config:
+                      layout:
+                        gridColumn: "1 / -1"
+                      if:
+                        allOf:
+                          - isJenkinsAvailable
+
+upstream:
+  backstage:
+    image:
+      registry: registry.redhat.io
+      repository: rhdh/rhdh-hub-rhel9@sha256
+      tag: d8268197ba0466643efb818fcad8f0fc29e32463f75b0f7f51d9ce75ec717572
+      pullPolicy: IfNotPresent
+
+    appConfig:
+      catalog:
+        rules:
+          - allow: [Component, System, API, Resource, Location]
+        locations:
+          - type: url
+            target: https://github.com/christoph-jerolimov/janus/blob/main/test-catalog/all.yaml
+            rules:
+              - allow: [Component, System, API, Resource, Location, User, Group]
+
+      permission:
+        enabled: true
+        rbac:
+          pluginsWithPermission:
+            - catalog
+            - permission
+            - scaffolder
+          # policyFileReload: true
+          # policies-csv-file: ./rbac/rbac-policies.csv
+          # conditionalPoliciesFile: ./rbac-conditions/rbac-conditional-policies.yaml
+          admin:
+            superUsers:
+              - name: user:default/christoph-jerolimov
+            users:
+              - name: user:default/rhdh-qe
+
+  # reduce memory usage
+  postgresql:
+    primary:
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 250m
+          memory: 256Mi
