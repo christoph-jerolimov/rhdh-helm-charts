@@ -1,8 +1,43 @@
 global:
   dynamic:
     plugins:
-      - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-global-header
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-rbac
         disabled: false
+      - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-bulk-import
+        disabled: false
+      - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-bulk-import-backend-dynamic
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-tech-radar
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-plugin-kubernetes
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-plugin-kubernetes-backend-dynamic
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-tekton
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-topology
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-acr
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-jfrog-artifactory
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-nexus-repository-manager
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-quay
+        disabled: false
+
+      - package: ./dynamic-plugins/dist/backstage-plugin-notifications
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-plugin-notifications-backend-dynamic
+        disabled: false
+
+      - package: ./dynamic-plugins/dist/backstage-plugin-signals
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-plugin-signals-backend-dynamic
+        disabled: false
+
+      # - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-global-header
+      #   disabled: false
 
       # - package: '@red-hat-developer-hub/backstage-plugin-global-header-test@0.0.2'
       #   integrity: 'sha512-Dlay4DUAC3SifSJx4dmKDeD07DITGX9ZZ2SMCgcMMc00GJVKToD3DFuPYZ7lV2C2Ve7gWDufCf5NUmqaUWf6GA=='
@@ -27,10 +62,20 @@ upstream:
     image:
       registry: quay.io
       repository: rhdh-community/rhdh
-      tag: pr-2263
+      tag: pr-2263-90b28935
       pullPolicy: IfNotPresent
 
     appConfig:
+      backend:
+        auth:
+          externalAccess:
+            - type: static
+              options:
+                # Notice: This test-token can be used to add notifications to the backstage demo application.
+                # Production enironments should define a token in a more secure way that supports rotation.
+                token: test-token
+                subject: test-subject
+
       catalog:
         rules:
           - allow: [Component, System, API, Resource, Location]
