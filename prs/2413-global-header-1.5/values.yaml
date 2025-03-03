@@ -1,0 +1,138 @@
+global:
+  dynamic:
+    plugins:
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-rbac
+        disabled: false
+      - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-bulk-import
+        disabled: false
+      - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-bulk-import-backend-dynamic
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-tech-radar
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-plugin-kubernetes
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-plugin-kubernetes-backend-dynamic
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-tekton
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-topology
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-acr
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-jfrog-artifactory
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-nexus-repository-manager
+        disabled: false
+      - package: ./dynamic-plugins/dist/backstage-community-plugin-quay
+        disabled: false
+
+#      - package: ./dynamic-plugins/dist/backstage-plugin-notifications
+#        disabled: false
+#      - package: ./dynamic-plugins/dist/backstage-plugin-notifications-backend-dynamic
+#        disabled: false
+
+#      - package: ./dynamic-plugins/dist/backstage-plugin-signals
+#        disabled: false
+#      - package: ./dynamic-plugins/dist/backstage-plugin-signals-backend-dynamic
+#        disabled: false
+
+      # - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-global-header
+      #   disabled: true
+
+      # - package: '@red-hat-developer-hub/backstage-plugin-global-header-test@0.0.2'
+      #   integrity: 'sha512-Dlay4DUAC3SifSJx4dmKDeD07DITGX9ZZ2SMCgcMMc00GJVKToD3DFuPYZ7lV2C2Ve7gWDufCf5NUmqaUWf6GA=='
+      #   pluginConfig:
+      #     dynamicPlugins:
+      #       frontend:
+      #         red-hat-developer-hub.backstage-plugin-global-header-test:
+      #           mountPoints:
+      #             - mountPoint: application/header
+      #               importName: CrashHeader
+      #               config:
+      #                 layout:
+      #                   position: above-main-content
+      #             - mountPoint: application/header
+      #               importName: CrashHeader
+      #               config:
+      #                 layout:
+      #                   position: above-sidebar
+
+upstream:
+  backstage:
+    image:
+      registry: quay.io
+      repository: rhdh-community/rhdh
+      tag: pr-2413
+      pullPolicy: IfNotPresent
+
+    appConfig:
+
+      app:
+        support:
+          url: https://access.redhat.com/products/red-hat-developer-hub
+          items:
+            - title: Red Hat Developer Hub
+              links:
+                - url: https://access.redhat.com/products/red-hat-developer-hub
+                  title: Product Info
+                - url: https://access.redhat.com/documentation/en-us/red_hat_developer_hub
+                  title: Documentation
+
+      backend:
+        auth:
+          externalAccess:
+            - type: static
+              options:
+                # Notice: This test-token can be used to add notifications to the backstage demo application.
+                # Production enironments should define a token in a more secure way that supports rotation.
+                token: test-token
+                subject: test-subject
+
+      catalog:
+        rules:
+          - allow: [Component, System, API, Resource, Location]
+        locations:
+          - type: url
+            target: https://github.com/christoph-jerolimov/janus/blob/main/test-catalog/all.yaml
+            rules:
+              - allow: [Component, System, API, Resource, Location, User, Group]
+
+          - type: url
+            target: https://github.com/redhat-developer/rhdh-plugins/blob/main/workspaces/marketplace/examples/all-orgs.yaml
+            rules:
+              - allow: [Group]
+          - type: url
+            target: https://github.com/redhat-developer/rhdh-plugins/blob/main/workspaces/marketplace/examples/all-plugins.yaml
+            rules:
+              - allow: [Plugin]
+          - type: url
+            target: https://github.com/redhat-developer/rhdh-plugins/blob/main/workspaces/marketplace/examples/all-pluginlists.yaml
+            rules:
+              - allow: [PluginList]
+
+      permission:
+        enabled: true
+        rbac:
+          pluginsWithPermission:
+            - catalog
+            - permission
+            - scaffolder
+          # policyFileReload: true
+          # policies-csv-file: ./rbac/rbac-policies.csv
+          # conditionalPoliciesFile: ./rbac-conditions/rbac-conditional-policies.yaml
+          admin:
+            superUsers:
+              - name: user:default/christoph-jerolimov
+            users:
+              - name: user:default/rhdh-qe
+
+  # reduce memory usage
+  postgresql:
+    primary:
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 250m
+          memory: 256Mi
