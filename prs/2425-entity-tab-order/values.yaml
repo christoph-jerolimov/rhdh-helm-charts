@@ -1,0 +1,105 @@
+global:
+  dynamic:
+    plugins:
+      # - package: ./dynamic-plugins/dist/backstage-community-plugin-rbac
+      #   disabled: false
+      # - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-bulk-import
+      #   disabled: false
+      # - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-bulk-import-backend-dynamic
+      #   disabled: false
+      # - package: ./dynamic-plugins/dist/backstage-community-plugin-tech-radar
+      #   disabled: false
+      # - package: ./dynamic-plugins/dist/backstage-plugin-kubernetes
+      #   disabled: false
+      # - package: ./dynamic-plugins/dist/backstage-plugin-kubernetes-backend-dynamic
+      #   disabled: false
+      # - package: ./dynamic-plugins/dist/backstage-community-plugin-tekton
+      #   disabled: false
+      # - package: ./dynamic-plugins/dist/backstage-community-plugin-topology
+      #   disabled: false
+      # - package: ./dynamic-plugins/dist/backstage-community-plugin-acr
+      #   disabled: false
+      # - package: ./dynamic-plugins/dist/backstage-community-plugin-jfrog-artifactory
+      #   disabled: false
+      # - package: ./dynamic-plugins/dist/backstage-community-plugin-nexus-repository-manager
+      #   disabled: false
+      # - package: ./dynamic-plugins/dist/backstage-community-plugin-quay
+      #   disabled: false
+
+      - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-catalog-backend-module-marketplace-dynamic
+        disabled: false
+      - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-marketplace-backend-dynamic
+        disabled: false
+      - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-marketplace
+        disabled: false
+
+upstream:
+  backstage:
+    image:
+      registry: quay.io
+      repository: rhdh-community/rhdh
+      tag: pr-2425
+      pullPolicy: IfNotPresent
+
+    appConfig:
+      backend:
+        csp:
+          img-src:
+            # "'self'" and 'data' are from the backstage default but must be set since img-src is overwritten
+            - "'self'"
+            - 'data:'
+            - https://avatars.githubusercontent.com
+            - https://janus-idp.io
+
+      catalog:
+        rules:
+          - allow: [Component, System, API, Resource, Location]
+        locations:
+          - type: url
+            target: https://github.com/christoph-jerolimov/janus/blob/main/test-catalog/all.yaml
+            rules:
+              - allow: [Component, System, API, Resource, Location, User, Group]
+
+          - type: url
+            target: https://github.com/redhat-developer/rhdh-plugins/blob/main/workspaces/marketplace/examples/all-orgs.yaml
+            rules:
+              - allow: [Group]
+          - type: url
+            target: https://github.com/redhat-developer/rhdh-plugins/blob/main/workspaces/marketplace/examples/all-plugins.yaml
+            rules:
+              - allow: [Plugin]
+          - type: url
+            target: https://github.com/redhat-developer/rhdh-plugins/blob/main/workspaces/marketplace/examples/all-packages.yaml
+            rules:
+              - allow: [Package]
+          - type: url
+            target: https://github.com/redhat-developer/rhdh-plugins/blob/main/workspaces/marketplace/examples/all-collections.yaml
+            rules:
+              - allow: [PluginCollection]
+
+      permission:
+        enabled: true
+        rbac:
+          pluginsWithPermission:
+            - catalog
+            - permission
+            - scaffolder
+          # policyFileReload: true
+          # policies-csv-file: ./rbac/rbac-policies.csv
+          # conditionalPoliciesFile: ./rbac-conditions/rbac-conditional-policies.yaml
+          admin:
+            superUsers:
+              - name: user:default/christoph-jerolimov
+            users:
+              - name: user:default/rhdh-qe
+
+  # reduce memory usage
+  postgresql:
+    primary:
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 250m
+          memory: 256Mi
