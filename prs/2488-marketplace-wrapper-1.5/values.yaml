@@ -26,19 +26,19 @@ global:
       # - package: ./dynamic-plugins/dist/backstage-community-plugin-quay
       #   disabled: false
 
-      - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-catalog-backend-module-marketplace-dynamic
-        disabled: false
-      - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-marketplace-backend-dynamic
-        disabled: false
-      - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-marketplace
-        disabled: false
+      # - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-catalog-backend-module-marketplace-dynamic
+      #   disabled: false
+      # - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-marketplace-backend-dynamic
+      #   disabled: false
+      # - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-marketplace
+      #   disabled: false
 
 upstream:
   backstage:
     image:
       registry: quay.io
       repository: rhdh-community/rhdh
-      tag: pr-2488
+      tag: pr-2488-7a54c900
       pullPolicy: IfNotPresent
 
     appConfig:
@@ -48,11 +48,12 @@ upstream:
             # "'self'" and 'data' are from the backstage default but must be set since img-src is overwritten
             - "'self'"
             - 'data:'
+            - https://avatars.githubusercontent.com
             - https://janus-idp.io
 
       catalog:
         rules:
-          - allow: [Component, System, API, Resource, Location]
+          - allow: [Component, System, API, Resource, Location, Plugin, Package, PluginCollection]
         locations:
           - type: url
             target: https://github.com/christoph-jerolimov/janus/blob/main/test-catalog/all.yaml
