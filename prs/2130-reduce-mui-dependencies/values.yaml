@@ -30,7 +30,7 @@ upstream:
   backstage:
     image:
       registry: quay.io
-      repository: janus-idp/backstage-showcase
+      repository: rhdh-community/rhdh
       tag: pr-2130
       pullPolicy: IfNotPresent
 
