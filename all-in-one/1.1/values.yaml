@@ -24,12 +24,6 @@ global:
 
 upstream:
   backstage:
-    image:
-      registry: registry.redhat.io
-      repository: rhdh/rhdh-hub-rhel9
-      tag: 1.1-107.1717076948
-      pullPolicy: IfNotPresent
-
     appConfig:
       app:
         baseUrl: 'https://{{- include "janus-idp.hostname" . }}'

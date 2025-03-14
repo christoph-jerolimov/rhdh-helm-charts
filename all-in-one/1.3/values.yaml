@@ -28,12 +28,6 @@ global:
 
 upstream:
   backstage:
-    image:
-      registry: registry.redhat.io
-      repository: rhdh/rhdh-hub-rhel9@sha256
-      tag: c044fed8485a62a5051ac726525da546936be22f268db05491bf81582e0e6194
-      pullPolicy: IfNotPresent
-
     appConfig:
       app:
         brainding:
