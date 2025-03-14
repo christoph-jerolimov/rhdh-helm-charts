@@ -2,7 +2,7 @@ repo-name=openshift-helm-charts
 repo-url=https://charts.openshift.io/
 
 chart-name=openshift-helm-charts/redhat-developer-hub
-chart-version=1.4.1
+chart-version=1.4.2
 
 release-name=redhat-developer-hub
 release-namespace=rhdh-all-in-one-1-4-test
@@ -18,7 +18,6 @@ install:
 		--set "global.clusterRouterBase=${cluster-route-suffix}" \
 		--values ../../github.local.yaml \
 		--values ../../kubernetes.local.yaml \
-		--values ../../acr.local.yaml \
 		--values values.yaml
 
 uninstall:
@@ -35,3 +34,6 @@ current-values:
 
 default-values:
 	helm show values "${chart-name}" --version "${chart-version}"
+
+update-default-values:
+	helm show values "${chart-name}" --version "${chart-version}" > default-values.yaml
