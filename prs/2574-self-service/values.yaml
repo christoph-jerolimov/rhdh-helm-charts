@@ -3,7 +3,7 @@ upstream:
     image:
       registry: quay.io
       repository: rhdh-community/rhdh
-      tag: pr-2578
+      tag: pr-2574
       pullPolicy: IfNotPresent
 
     appConfig:
