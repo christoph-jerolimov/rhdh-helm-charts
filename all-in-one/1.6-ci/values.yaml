@@ -28,6 +28,11 @@ global:
 
 upstream:
   backstage:
+    image:
+      registry: quay.io
+      repository: rhdh/rhdh-hub-rhel9@sha256
+      tag: 03161145acd1646ee477223515459d75d02047e4e133bc7a0a9daf7839e116c7
+
     appConfig:
       catalog:
         rules:

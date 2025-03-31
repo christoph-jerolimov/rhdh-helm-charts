@@ -39,7 +39,7 @@ upstream:
       # tag is set to digest via prepare.sh script
       # tag: "${RHDH_DIGEST}"
 
-      tag: 6d2b52788c8f05bddb8e6b7ceea9fdc5db10253c72b9cb23b2108444cd72472b
+      tag: 9fd11a4551da42349809bbf34eb54c3b0ca8a3884d556593656af79e72786c01
     command: []
     # FIXME (tumido): USE POSTGRES_PASSWORD and POSTGRES_USER instead of POSTGRES_ADMIN_PASSWORD
     # This is a hack. In {fedora,rhel}/postgresql images, regular user is forbidden
@@ -249,7 +249,7 @@ upstream:
       # tag is set to digest via prepare.sh script
       # tag: "${POSTGRESQL_DIGEST}"
 
-      tag: 7e6be12e9abcd2d8618ae1c8981d9be252c8e5ac61adb00b26d9452da03f5a0b
+      tag: 450a3c82d66f0642eee81fc3b19f8cf01fbc18b8e9dbbd2268ca1f471898db2f
     auth:
       secretKeys:
         adminPasswordKey: postgres-password
