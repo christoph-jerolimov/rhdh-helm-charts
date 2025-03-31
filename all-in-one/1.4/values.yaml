@@ -28,6 +28,11 @@ global:
 
 upstream:
   backstage:
+    image:
+      registry: registry.redhat.io
+      repository: rhdh/rhdh-hub-rhel9@sha256
+      tag: 5eb109362246ccddd564febe6387bc6015d47555df00c36aa88c2247099851b7
+
     appConfig:
       catalog:
         rules:
