@@ -36,7 +36,7 @@ upstream:
 
     appConfig:
       app:
-        brainding:
+        branding:
           theme:
             options:
               cards: mui

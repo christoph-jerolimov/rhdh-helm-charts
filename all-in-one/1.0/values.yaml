@@ -31,6 +31,7 @@ upstream:
       app:
         baseUrl: 'https://{{- include "janus-idp.hostname" . }}'
         # https://docs.redhat.com/en/documentation/red_hat_developer_hub/1.0/html/getting_started_with_red_hat_developer_hub/ref-additional-rhdh-customizations_rhdh-getting-started
+
         branding:
           theme:
             light:
