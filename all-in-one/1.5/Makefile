@@ -1,5 +1,7 @@
-# https://quay.io/repository/rhdh/chart?tab=tags
-chart-name=oci://quay.io/rhdh/chart
+repo-name=openshift-helm-charts
+repo-url=https://charts.openshift.io/
+
+chart-name=openshift-helm-charts/redhat-developer-hub
 chart-version=1.5.1
 
 release-name=redhat-developer-hub
@@ -8,14 +10,14 @@ release-namespace=rhdh-all-in-one-1-5-test
 cluster-route-suffix != ../../scripts/get-cluster-route-suffix.sh
 
 install:
-	helm upgrade "${release-name}" "${chart-name}" --version "${chart-version}" \
+	helm repo add "${repo-name}" "${repo-url}"
+	helm upgrade "${release-name}" "${chart-name}" \
 		--install \
 		--create-namespace \
 		--namespace "${release-namespace}" \
 		--set "global.clusterRouterBase=${cluster-route-suffix}" \
 		--values ../../github.local.yaml \
 		--values ../../kubernetes.local.yaml \
-		--values ../../acr.local.yaml \
 		--values values.yaml
 
 uninstall:

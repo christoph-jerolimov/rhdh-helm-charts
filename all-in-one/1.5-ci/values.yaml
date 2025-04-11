@@ -31,7 +31,7 @@ upstream:
     image:
       registry: quay.io
       repository: rhdh/rhdh-hub-rhel9@sha256
-      tag: 9fd11a4551da42349809bbf34eb54c3b0ca8a3884d556593656af79e72786c01
+      tag: 22effffde6a426597ad1e64e3ddc74b607ea54e2b5b11f616358c38679db0c41
 
     appConfig:
       app:
