@@ -1,6 +1,6 @@
 # https://quay.io/repository/rhdh/chart?tab=tags
 chart-name=oci://quay.io/rhdh/chart
-chart-version=1.6-70-CI
+chart-version=1.6-76-CI
 
 release-name=redhat-developer-hub
 release-namespace=rhdh-all-in-one-1-6-ci
