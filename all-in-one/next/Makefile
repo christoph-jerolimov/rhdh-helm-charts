@@ -2,7 +2,7 @@ repo-name=openshift-helm-charts
 repo-url=https://charts.openshift.io/
 
 chart-name=openshift-helm-charts/redhat-developer-hub
-chart-version=1.4.1
+chart-version=1.5.1
 
 release-name=redhat-developer-hub
 release-namespace=rhdh-all-in-one-next-test
@@ -35,3 +35,6 @@ current-values:
 
 default-values:
 	helm show values "${chart-name}" --version "${chart-version}"
+
+update-default-values:
+	helm show values "${chart-name}" --version "${chart-version}" > default-values.yaml
