@@ -2,7 +2,7 @@ repo-name=openshift-helm-charts
 repo-url=https://charts.openshift.io/
 
 chart-name=openshift-helm-charts/redhat-developer-hub
-chart-version=1.5.1
+chart-version=1.5.2
 
 release-name=redhat-developer-hub
 release-namespace=rhdh-all-in-one-1-5-test
