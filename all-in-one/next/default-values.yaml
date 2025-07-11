@@ -1,3 +1,9 @@
+# RHIDP-3115: nameOverride affects the resources created by the RHDH Chart,
+# like the Route host created on OCP.
+# It needs to match the value provided in 'upstream.nameOverride'
+# to have consistent behavior between the Route and the URLs
+# from the app-config ConfigMap managed by the Chart.
+nameOverride: developer-hub
 global:
   dynamic:
     # -- Array of YAML files listing dynamic plugins to include with those listed in the `plugins` field.
@@ -34,12 +40,12 @@ upstream:
   nameOverride: developer-hub
   backstage:
     image:
-      registry: registry.redhat.io
+      registry: quay.io
       repository: rhdh/rhdh-hub-rhel9@sha256
       # tag is set to digest via prepare.sh script
       # tag: "${RHDH_DIGEST}"
 
-      tag: 9fd11a4551da42349809bbf34eb54c3b0ca8a3884d556593656af79e72786c01
+      tag: 30ce6f4d511492335af4655da6320a6cd87dc27d15110ae3ec83b8bfed8665da
     command: []
     # FIXME (tumido): USE POSTGRES_PASSWORD and POSTGRES_USER instead of POSTGRES_ADMIN_PASSWORD
     # This is a hack. In {fedora,rhel}/postgresql images, regular user is forbidden
@@ -69,6 +75,7 @@ upstream:
                 subject: legacy-default-config
                 secret: ${BACKEND_SECRET}
     containerSecurityContext:
+      readOnlyRootFilesystem: true
       allowPrivilegeEscalation: false
       capabilities:
         drop: ["ALL"]
@@ -209,6 +216,9 @@ upstream:
         env:
           - name: NPM_CONFIG_USERCONFIG
             value: /opt/app-root/src/.npmrc.dynamic-plugins
+            # This following variable is required for orchestrator to startup properly.
+          - name: MAX_ENTRY_SIZE
+            value: "30000000"
         imagePullPolicy: Always
         volumeMounts:
           - mountPath: /dynamic-plugins-root
@@ -243,13 +253,15 @@ upstream:
   postgresql:
     enabled: true
     postgresqlDataDir: /var/lib/pgsql/data/userdata
+    serviceBindings:
+      enabled: true
     image:
       registry: registry.redhat.io
       repository: rhel9/postgresql-15@sha256
       # tag is set to digest via prepare.sh script
       # tag: "${POSTGRESQL_DIGEST}"
 
-      tag: 450a3c82d66f0642eee81fc3b19f8cf01fbc18b8e9dbbd2268ca1f471898db2f
+      tag: 38cc9529e248c093d7ee6887eac96b5a192fe60bbd0efb41945e9b279d1544e9
     auth:
       secretKeys:
         adminPasswordKey: postgres-password
@@ -260,6 +272,10 @@ upstream:
         enabled: false
       containerSecurityContext:
         enabled: false
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+            - ALL
       resources:
         requests:
           cpu: 250m
@@ -325,10 +341,36 @@ test:
     repository: curl/curl
     # -- Test connection pod image tag. Note that the image needs to have both the `sh` and `curl` binaries in it.
     tag: latest
-# RHIDP-3115: nameOverride affects the resources created by the RHDH Chart,
-# like the Route host created on OCP.
-# It needs to match the value provided in 'upstream.nameOverride'
-# to have consistent behavior between the Route and the URLs
-# from the app-config ConfigMap managed by the Chart.
-nameOverride: developer-hub
+orchestrator:
+  enabled: false
+  serverlessLogicOperator:
+    enabled: true
+  serverlessOperator:
+    enabled: true
+  sonataflowPlatform:
+    monitoring:
+      enabled: true
+    eventing:
+      broker:
+        name: ""
+        namespace: ""
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "1Gi"
+        cpu: "500m"
+    # -- Secret name for the user-created secret to connect an external DB
+    externalDBsecretRef: ""
+    # -- Name for the user-configured external Database
+    externalDBName: ""
+    # -- Host for the user-configured external Database
+    externalDBHost: ""
+    # -- Port for the user-configured external Database
+    externalDBPort: ""
+    # -- Image for the init container used by the create-db job
+    initContainerImage: "{{ .Values.upstream.postgresql.image.registry }}/{{ .Values.upstream.postgresql.image.repository }}:{{ .Values.upstream.postgresql.image.tag }}"
+    # -- Image for the container used by the create-db job
+    createDBJobImage: "{{ .Values.upstream.postgresql.image.registry }}/{{ .Values.upstream.postgresql.image.repository }}:{{ .Values.upstream.postgresql.image.tag }}"
 

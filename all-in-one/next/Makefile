@@ -1,8 +1,7 @@
-repo-name=openshift-helm-charts
-repo-url=https://charts.openshift.io/
-
-chart-name=openshift-helm-charts/redhat-developer-hub
-chart-version=1.5.1
+# https://quay.io/repository/rhdh/chart?tab=tags
+# https://quay.io/repository/rhdh/rhdh-hub-rhel9?tab=tags
+chart-name=oci://quay.io/rhdh/chart
+chart-version=1.7-113-CI
 
 release-name=redhat-developer-hub
 release-namespace=rhdh-all-in-one-next-test
@@ -10,8 +9,7 @@ release-namespace=rhdh-all-in-one-next-test
 cluster-route-suffix != ../../scripts/get-cluster-route-suffix.sh
 
 install:
-	helm repo add "${repo-name}" "${repo-url}"
-	helm upgrade "${release-name}" "${chart-name}" \
+	helm upgrade "${release-name}" "${chart-name}" --version "${chart-version}" \
 		--install \
 		--create-namespace \
 		--namespace "${release-namespace}" \
