@@ -1,0 +1,230 @@
+global:
+  dynamic:
+    plugins:
+      # - package: ./dynamic-plugins/dist/backstage-community-plugin-rbac
+      #   disabled: false
+      - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-bulk-import
+        disabled: false
+      - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-bulk-import-backend-dynamic
+        disabled: false
+      # - package: ./dynamic-plugins/dist/backstage-community-plugin-tech-radar
+      #   disabled: false
+      # - package: ./dynamic-plugins/dist/backstage-plugin-kubernetes
+      #   disabled: false
+      # - package: ./dynamic-plugins/dist/backstage-plugin-kubernetes-backend-dynamic
+      #   disabled: false
+      # - package: ./dynamic-plugins/dist/backstage-community-plugin-tekton
+      #   disabled: false
+      # - package: ./dynamic-plugins/dist/backstage-community-plugin-topology
+      #   disabled: false
+      # - package: ./dynamic-plugins/dist/backstage-community-plugin-acr
+      #   disabled: false
+      # - package: ./dynamic-plugins/dist/backstage-community-plugin-jfrog-artifactory
+      #   disabled: false
+      # - package: ./dynamic-plugins/dist/backstage-community-plugin-nexus-repository-manager
+      #   disabled: false
+      # - package: ./dynamic-plugins/dist/backstage-community-plugin-quay
+      #   disabled: false
+
+      # test config viewer
+      - package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/proberaum-backstage-plugin-config-viewer:next__0.4.1!proberaum-backstage-plugin-config-viewer
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              proberaum.backstage-plugin-config-viewer:
+                translationResources:
+                  - importName: configViewerTranslations
+                    ref: configViewerTranslationRef
+                dynamicRoutes:
+                  - path: /config-viewer
+                    importName: ConfigViewerPage
+                    menuItem:
+                      text: Config viewer (from yaml)
+
+      # test npm plugin
+      - package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/backstage-community-plugin-npm:bs_1.39.1__1.7.0!backstage-community-plugin-npm
+        disabled: false
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              backstage-community.plugin-npm:
+                translationResources:
+                  - importName: npmTranslations
+                    ref: npmTranslationRef
+                entityTabs:
+                  - mountPoint: entity.page.npm
+                    path: /npm
+                    title: npm releases
+                    config:
+                      if:
+                        allOf:
+                          - isNpmAvailable
+                mountPoints:
+                  - mountPoint: entity.page.overview/cards
+                    importName: EntityNpmInfoCard
+                    config:
+                      layout:
+                        gridColumnEnd:
+                          xs: "span 12"
+                          md: "span 8"
+                      if:
+                        allOf:
+                          - isNpmAvailable
+                  - mountPoint: entity.page.overview/cards
+                    importName: EntityNpmReleaseOverviewCard
+                    config:
+                      layout:
+                        gridColumnEnd:
+                          xs: "span 12"
+                          md: "span 8"
+                      if:
+                        allOf:
+                          - isNpmAvailable
+                  - mountPoint: entity.page.npm/cards
+                    importName: EntityNpmReleaseTableCard
+                    config:
+                      layout:
+                        gridColumnEnd:
+                          xs: "span 12"
+                      if:
+                        allOf:
+                          - isNpmAvailable
+      - package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/backstage-community-plugin-npm-backend:bs_1.39.1__1.7.0!backstage-community-plugin-npm-backend
+        disabled: false
+        pluginConfig:
+          npm:
+            defaultRegistry: npmjs
+            registries:
+              - name: npmjs
+                url: https://registry.npmjs.com
+              - name: github
+                url: https://npm.pkg.github.com
+              - name: gitlab
+                url: https://gitlab.com/api/v4/packages/npm
+
+upstream:
+  backstage:
+    image:
+      registry: quay.io
+      repository: rhdh-community/rhdh
+      tag: next
+      pullPolicy: IfNotPresent
+
+    extraVolumeMounts:
+      # defaults from chart
+      - name: dynamic-plugins-root
+        mountPath: /opt/app-root/src/dynamic-plugins-root
+      - name: temp
+        mountPath: /tmp
+
+      # add translations configmap
+      - name: rhdh-translations-configmap
+        mountPath: /translations
+
+    extraVolumes:
+      # defaults from chart
+      # - name: dynamic-plugins-root
+      #   ephemeral:
+      #     volumeClaimTemplate:
+      #       spec:
+      #         accessModes:
+      #           - ReadWriteOnce
+      #         resources:
+      #           requests:
+      #             storage: 5Gi
+      - name: dynamic-plugins
+        configMap:
+          defaultMode: 420
+          name: '{{ printf "%s-dynamic-plugins" .Release.Name }}'
+          optional: true
+      - name: dynamic-plugins-npmrc
+        secret:
+          defaultMode: 420
+          optional: true
+          secretName: '{{ printf "%s-dynamic-plugins-npmrc" .Release.Name }}'
+      - name: dynamic-plugins-registry-auth
+        secret:
+          defaultMode: 416
+          optional: true
+          secretName: '{{ printf "%s-dynamic-plugins-registry-auth" .Release.Name }}'
+      - name: npmcacache
+        emptyDir: {}
+      - name: temp
+        emptyDir: {}
+
+      # add translations configmap
+      - name: dynamic-plugins-root
+        persistentVolumeClaim:
+          claimName: dynamic-plugins-root
+      - name: rhdh-translations-configmap
+        configMap:
+          name: rhdh-translations-configmap
+
+    appConfig:
+      catalog:
+        rules:
+          - allow: [Component, System, API, Resource, Location]
+        locations:
+          - type: url
+            target: https://github.com/christoph-jerolimov/janus/blob/main/test-catalog/all.yaml
+            rules:
+              - allow: [Component, System, API, Resource, Location, User, Group]
+
+          # test npm plugin
+          - type: url
+            target: https://github.com/backstage/community-plugins/blob/main/workspaces/npm/examples/npmjs-examples.yaml
+          - type: url
+            target: https://github.com/backstage/community-plugins/blob/main/workspaces/npm/examples/github-examples.yaml
+          - type: url
+            target: https://github.com/backstage/community-plugins/blob/main/workspaces/npm/examples/gitlab-examples.yaml
+
+      dynamicPlugins:
+        frontend:
+          default.main-menu-items:
+            menuItems:
+              default.home:
+                title: Home (changed)
+
+      i18n:
+        locales:
+          - en
+          - de
+          - fr
+          - it
+          - ja
+          - ko
+          - en-US
+          - en-IN
+          - en-UK
+          - zh
+          - pt-BR
+          - zh-CN
+        overrides:
+          - /translations/allTranslations.json
+
+      permission:
+        enabled: true
+        rbac:
+          pluginsWithPermission:
+            - catalog
+            - permission
+            - scaffolder
+          # policyFileReload: true
+          # policies-csv-file: ./rbac/rbac-policies.csv
+          # conditionalPoliciesFile: ./rbac-conditions/rbac-conditional-policies.yaml
+          admin:
+            superUsers:
+              - name: user:default/christoph-jerolimov
+            users:
+              - name: user:default/rhdh-qe
+
+  # reduce memory usage
+  postgresql:
+    primary:
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 250m
+          memory: 256Mi
