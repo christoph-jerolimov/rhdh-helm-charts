@@ -31,3 +31,7 @@ current-values:
 
 default-values:
 	helm show values "${chart-name}" --version "${chart-version}"
+
+update-default-values:
+	helm repo update
+	helm show values "${chart-name}" --version "${chart-version}" > default-values.yaml
