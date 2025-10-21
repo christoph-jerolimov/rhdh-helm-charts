@@ -1,0 +1,19 @@
+upstream:
+  backstage:
+    appConfig:
+      proxy:
+        '/jira/api':
+          target: TODO
+          headers:
+            Authorization: TODO
+            Accept: 'application/json'
+            Content-Type: 'application/json'
+            X-Atlassian-Token: 'nocheck'
+            User-Agent: RHDH
+
+      jira:
+        proxyPath: /jira/api
+        product: cloud
+        baseUrl: TODO
+        token: TODO
+        #apiVersion: "3"
