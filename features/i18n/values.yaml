@@ -16,7 +16,7 @@ global:
         disabled: false
 
       # test config viewer
-      - package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/proberaum-backstage-plugin-config-viewer:next__0.4.1!proberaum-backstage-plugin-config-viewer
+      - package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/proberaum-backstage-plugin-config-viewer:next__0.11.0!proberaum-backstage-plugin-config-viewer
         pluginConfig:
           dynamicPlugins:
             frontend:
@@ -25,10 +25,53 @@ global:
                   - importName: configViewerTranslations
                     ref: configViewerTranslationRef
                 dynamicRoutes:
-                  - path: /config-viewer
-                    importName: ConfigViewerPage
+                  - importName: ConfigViewerPage
+                    path: /config-viewer
                     menuItem:
-                      text: Config viewer (from yaml)
+                      text: Config viewer
+      - package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/proberaum-backstage-plugin-config-viewer-backend:next__0.11.0!proberaum-backstage-plugin-config-viewer-backend
+        pluginConfig:
+          configViewer:
+            dangerouslyAnyoneCanReadAllTheFiles: true
+            workingDirectory: /opt/app-root/src
+            files:
+              - '*.yaml'
+            ignore:
+              - '*example*'
+
+      # test env viewer
+      - package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/proberaum-backstage-plugin-env-viewer:next__0.1.0!proberaum-backstage-plugin-env-viewer
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              proberaum.backstage-plugin-env-viewer:
+                translationResources:
+                  - importName: envViewerTranslations
+                    ref: envViewerTranslationRef
+                dynamicRoutes:
+                  - importName: EnvViewerPage
+                    path: /env-viewer
+                    menuItem:
+                      text: Env vars viewer
+      - package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/proberaum-backstage-plugin-env-viewer-backend:next__0.1.0!proberaum-backstage-plugin-env-viewer-backend
+        pluginConfig:
+          envViewer:
+            dangerouslyAnyoneCanReadAllEnvVars: true
+
+      # test icon viewer
+      - package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/proberaum-backstage-plugin-icon-viewer:next__0.1.2!proberaum-backstage-plugin-icon-viewer
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              proberaum.backstage-plugin-icon-viewer:
+                translationResources:
+                  - importName: iconViewerTranslations
+                    ref: iconViewerTranslationRef
+                dynamicRoutes:
+                  - importName: IconViewerPage
+                    path: /icon-viewer
+                    menuItem:
+                      text: Icon viewer
 
       # test npm plugin
       - package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/backstage-community-plugin-npm:bs_1.39.1__1.7.0!backstage-community-plugin-npm
