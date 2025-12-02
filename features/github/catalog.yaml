@@ -1,0 +1,25 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: rhdh-team
+  title: RHDH team
+spec:
+  type: team
+  children: []
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: christoph-jerolimov
+  title: Christoph Jerolimov (GitHub) # shown in the table
+  annotations:
+    github.com/user-login: christoph-jerolimov
+spec:
+  profile:
+    displayName: Christoph Jerolimov (GitHub) # shown on the detail page
+    picture: https://avatars.githubusercontent.com/u/139310?v=4
+  memberOf: [rhdh-team]
+---
+# plus:
+# https://github.com/redhat-developer/rhdh/blob/main/catalog-info.yaml
+# https://github.com/redhat-developer/rhdh-cli/blob/main/catalog-info.yaml

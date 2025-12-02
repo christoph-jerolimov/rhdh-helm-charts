@@ -1,0 +1,77 @@
+global:
+  dynamic:
+    plugins:
+      # GitHub Pull Requests Board plugin
+      - package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/backstage-community-plugin-github-pull-requests-board:pr_1275__0.9.0!backstage-community-plugin-github-pull-requests-board
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              backstage-community.plugin-github-pull-requests-board:
+                mountPoints:
+                  - mountPoint: entity.page.pull-requests/cards
+                    importName: EntityTeamPullRequestsCard
+                    config: 
+                      layout:                               
+                        gridColumn: "1 / -1"
+                        gridRow: "2"
+                      if:
+                        anyOf:
+                          - isKind: Group
+
+upstream:
+  backstage:
+    image:
+      registry: quay.io
+      repository: rhdh/rhdh-hub-rhel9
+      tag: 1.8-160
+
+    appConfig:
+      userSettings:
+        persistence: browser # opt-out of database storage
+
+      catalog:
+        rules:
+          - allow: [Component, System, API, Resource, Location]
+        locations:
+          - type: url
+            target: https://github.com/christoph-jerolimov/janus/blob/main/test-catalog/all.yaml
+            rules:
+              - allow: [Component, System, API, Resource, Location, User, Group]
+          - type: url
+            target: https://github.com/redhat-developer/rhdh/blob/main/catalog-info.yaml
+          - type: url
+            target: https://github.com/redhat-developer/rhdh-cli/blob/main/catalog-info.yaml
+
+      i18n:
+        locales:
+          - en
+          - de
+          - fr
+          - it
+
+      permission:
+        enabled: false
+        rbac:
+          pluginsWithPermission:
+            - catalog
+            - permission
+            - scaffolder
+          # policyFileReload: true
+          # policies-csv-file: ./rbac/rbac-policies.csv
+          # conditionalPoliciesFile: ./rbac-conditions/rbac-conditional-policies.yaml
+          admin:
+            superUsers:
+              - name: user:default/christoph-jerolimov
+            users:
+              - name: user:default/rhdh-qe
+
+  # reduce memory usage
+  postgresql:
+    primary:
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 250m
+          memory: 256Mi

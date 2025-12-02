@@ -1,22 +1,21 @@
-repo-name=openshift-helm-charts
-repo-url=https://charts.openshift.io/
-
-chart-name=openshift-helm-charts/redhat-developer-hub
-chart-version=1.3
+# https://quay.io/repository/rhdh/chart?tab=tags
+# https://quay.io/repository/rhdh/rhdh-hub-rhel9?tab=tags
+chart-name=oci://quay.io/rhdh/chart
+chart-version=1.8-160-CI
 
 release-name=redhat-developer-hub
-release-namespace=rhdh-1-3-default
+release-namespace=rhdh-github-test
 
 cluster-route-suffix != ../../scripts/get-cluster-route-suffix.sh
 
 install:
-	helm repo add "${repo-name}" "${repo-url}"
-	helm upgrade "${release-name}" "${chart-name}" \
+	helm upgrade "${release-name}" "${chart-name}" --version "${chart-version}" \
 		--install \
 		--create-namespace \
 		--namespace "${release-namespace}" \
 		--set "global.clusterRouterBase=${cluster-route-suffix}" \
-		--values ../../github.local.yaml
+		--values ../../github.local.yaml \
+		--values values.yaml
 
 uninstall:
 	helm uninstall "${release-name}" --namespace "${release-namespace}" --keep-history
@@ -32,3 +31,7 @@ current-values:
 
 default-values:
 	helm show values "${chart-name}" --version "${chart-version}"
+
+update-default-values:
+	helm repo update
+	helm show values "${chart-name}" --version "${chart-version}" > default-values.yaml
