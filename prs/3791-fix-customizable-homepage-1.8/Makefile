@@ -4,7 +4,7 @@ chart-name=oci://quay.io/rhdh/chart
 chart-version=1.8-160-CI
 
 release-name=redhat-developer-hub
-release-namespace=rhdh-homepage-test
+release-namespace=rhdh-pr-3791-test
 
 cluster-route-suffix != ../../scripts/get-cluster-route-suffix.sh
 

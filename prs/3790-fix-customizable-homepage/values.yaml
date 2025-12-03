@@ -1,0 +1,300 @@
+global:
+  dynamic:
+    plugins:
+      # GitHub Pull Requests Board plugin
+      - package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/backstage-community-plugin-github-pull-requests-board:pr_1275__0.9.0!backstage-community-plugin-github-pull-requests-board
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              backstage-community.plugin-github-pull-requests-board:
+                mountPoints:
+                  - mountPoint: entity.page.pull-requests/cards
+                    importName: EntityTeamPullRequestsCard
+                    config: 
+                      layout:                               
+                        gridColumn: "1 / -1"
+                        gridRow: "2"
+                      if:
+                        anyOf:
+                          - isKind: Group
+
+                  - mountPoint: home.page/cards
+                    importName: HomePageYourOpenPullRequestsCard
+                    config:
+                      id: github-assigned-issues
+                      title: "GitHub: Assigned Issues"
+                      description: Issues assigned to the logged in user
+                      cardLayout:
+                        width:
+                          minColumns: 4
+                          maxColumns: 12
+                          defaultColumns: 12
+                        height:
+                          minRows: 2
+                          maxRows: 12
+                          defaultRows: 4
+                      props:
+                        title: "GitHub: Assigned Issues"
+                        query: is:issue state:open archived:false assignee:@me
+                  - mountPoint: home.page/cards
+                    importName: HomePageYourOpenPullRequestsCard
+                    config:
+                      id: github-assigned-pull-requests
+                      title: "GitHub: Assigned Pull Requests"
+                      description: Pull Requests assigned to the logged in user
+                      cardLayout:
+                        width:
+                          minColumns: 4
+                          maxColumns: 12
+                          defaultColumns: 12
+                        height:
+                          minRows: 2
+                          maxRows: 12
+                          defaultRows: 4
+                      props:
+                        title: "GitHub: Assigned Pull Requests"
+                        query: is:pr state:open archived:false assignee:@me
+                  - mountPoint: home.page/cards
+                    importName: HomePageYourOpenPullRequestsCard
+                    config:
+                      id: github-open-issues
+                      title: "GitHub: Open Issues"
+                      description: Issues opened by the logged in user
+                      cardLayout:
+                        width:
+                          minColumns: 4
+                          maxColumns: 12
+                          defaultColumns: 12
+                        height:
+                          minRows: 2
+                          maxRows: 12
+                          defaultRows: 4
+                      props:
+                        title: "GitHub: Open Issues"
+                        query: is:issue state:open archived:false author:@me
+                  - mountPoint: home.page/cards
+                    importName: HomePageYourOpenPullRequestsCard
+                    config:
+                      id: github-open-pull-requests
+                      title: "GitHub: Open Pull Requests"
+                      description: Pull Requests opened by the logged in user
+                      cardLayout:
+                        width:
+                          minColumns: 4
+                          maxColumns: 12
+                          defaultColumns: 12
+                        height:
+                          minRows: 2
+                          maxRows: 12
+                          defaultRows: 4
+                      props:
+                        title: "GitHub: Open Pull Requests"
+                  - mountPoint: home.page/cards
+                    importName: HomePageRequestedReviewsCard
+                    config:
+                      id: github-requested-reviews
+                      title: "GitHub: Requested Reviews"
+                      description: Pull Requests that waiting for a code review of the logged in user
+                      cardLayout:
+                        width:
+                          minColumns: 4
+                          maxColumns: 12
+                          defaultColumns: 12
+                        height:
+                          minRows: 2
+                          maxRows: 12
+                          defaultRows: 4
+                      props:
+                        title: "GitHub: Requested Reviews"
+
+      - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-dynamic-home-page
+        disabled: false
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              red-hat-developer-hub.backstage-plugin-dynamic-home-page:
+                dynamicRoutes:
+                - path: /
+                  importName: DynamicCustomizableHomePage
+                mountPoints:
+                - mountPoint: application/listener
+                  importName: VisitListener
+
+                # the default cards
+                - mountPoint: home.page/cards
+                  importName: OnboardingSection
+                  config:
+                    id: rhdh-onboarding-section
+                    title: Red Hat Developer Hub - Onboarding
+                    cardLayout:
+                      width:
+                        minColumns: 4
+                        maxColumns: 12
+                        defaultColumns: 12
+                      height:
+                        minRows: 2
+                        maxRows: 12
+                        defaultRows: 4
+                    layouts:
+                      xl: { w: 12, h: 6 }
+                      lg: { w: 12, h: 6 }
+                      md: { w: 12, h: 7 }
+                      sm: { w: 12, h: 8 }
+                      xs: { w: 12, h: 9 }
+                      xxs: { w: 12, h: 14 }
+                - mountPoint: home.page/cards
+                  importName: EntitySection
+                  config:
+                    id: rhdh-entity-section
+                    title: Red Hat Developer Hub - Software Catalog
+                    cardLayout:
+                      width:
+                        minColumns: 4
+                        maxColumns: 12
+                        defaultColumns: 12
+                      height:
+                        minRows: 2
+                        maxRows: 12
+                        defaultRows: 4
+                    layouts:
+                      xl: { w: 12, h: 7 }
+                      lg: { w: 12, h: 7 }
+                      md: { w: 12, h: 8 }
+                      sm: { w: 12, h: 9 }
+                      xs: { w: 12, h: 11 }
+                      xxs: { w: 12, h: 15 }
+                - mountPoint: home.page/cards
+                  importName: TemplateSection
+                  config:
+                    id: rhdh-template-section
+                    title: Red Hat Developer Hub - Explore templates
+                    cardLayout:
+                      width:
+                        minColumns: 4
+                        maxColumns: 12
+                        defaultColumns: 12
+                      height:
+                        minRows: 2
+                        maxRows: 12
+                        defaultRows: 4
+                    layouts:
+                      xl: { w: 12, h: 5 }
+                      lg: { w: 12, h: 5 }
+                      md: { w: 12, h: 5 }
+                      sm: { w: 12, h: 5 }
+                      xs: { w: 12, h: 7.5 }
+                      xxs: { w: 12, h: 13.5 }
+                # additional available cards when the 'customizable' feature is enabled
+                - mountPoint: home.page/cards
+                  importName: QuickAccessCard
+                  config:
+                    id: quickaccess-card
+                    title: Quick Access Card
+                - mountPoint: home.page/cards
+                  importName: SearchBar
+                  config:
+                    id: searchbar
+                    title: Search
+                    cardLayout:
+                      width:
+                        minColumns: 4
+                        maxColumns: 12
+                        defaultColumns: 12
+                      height:
+                        minRows: 1
+                        maxRows: 2
+                        defaultRows: 2
+                - mountPoint: home.page/cards
+                  importName: CatalogStarredEntitiesCard
+                  config:
+                    id: catalog-starred-entities-card
+                    title: Starred catalog entities
+                - mountPoint: home.page/cards
+                  importName: RecentlyVisitedCard
+                  config:
+                    id: recently-visited-card
+                    title: Recently visited
+                - mountPoint: home.page/cards
+                  importName: TopVisitedCard
+                  config:
+                    id: top-visited-card
+                    title: Top visited
+                - mountPoint: home.page/cards
+                  importName: FeaturedDocsCard
+                  config:
+                    id: featured-docs-card
+                    title: Featured docs
+                - mountPoint: home.page/cards
+                  importName: JokeCard
+                  config:
+                    id: joke-card
+                    title: Random joke
+
+
+upstream:
+  backstage:
+    image:
+      registry: quay.io
+      repository: rhdh-community/rhdh
+      tag: pr-3790
+      pullPolicy: Always
+
+    appConfig:
+      catalog:
+        rules:
+          - allow: [Component, System, API, Resource, Location]
+        locations:
+          - type: url
+            target: https://github.com/christoph-jerolimov/janus/blob/main/test-catalog/all.yaml
+            rules:
+              - allow: [Component, System, API, Resource, Location, User, Group]
+          - type: url
+            target: https://github.com/christoph-jerolimov/rhdh-helm-charts/blob/main/features/github/catalog.yaml
+            rules:
+              - allow: [Component, System, API, Resource, Location, User, Group]
+          - type: url
+            target: https://github.com/redhat-developer/rhdh/blob/main/catalog-info.yaml
+          - type: url
+            target: https://github.com/redhat-developer/rhdh-cli/blob/main/catalog-info.yaml
+
+      i18n:
+        locales:
+          - en
+          - de
+          - fr
+          - it
+          - ja
+          - ko
+          - en-US
+          - en-IN
+          - en-UK
+          - zh
+          - pt-BR
+          - zh-CN
+
+      permission:
+        enabled: false
+        rbac:
+          pluginsWithPermission:
+            - catalog
+            - permission
+            - scaffolder
+          # policyFileReload: true
+          # policies-csv-file: ./rbac/rbac-policies.csv
+          # conditionalPoliciesFile: ./rbac-conditions/rbac-conditional-policies.yaml
+          admin:
+            superUsers:
+              - name: user:default/christoph-jerolimov
+            users:
+              - name: user:default/rhdh-qe
+
+  # reduce memory usage
+  postgresql:
+    primary:
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 250m
+          memory: 256Mi

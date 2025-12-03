@@ -1,30 +1,49 @@
 global:
   dynamic:
     plugins:
-      # - package: ./dynamic-plugins/dist/backstage-community-plugin-rbac
-      #   disabled: false
-      - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-bulk-import
-        disabled: false
-      - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-bulk-import-backend-dynamic
-        disabled: false
-      # - package: ./dynamic-plugins/dist/backstage-community-plugin-tech-radar
-      #   disabled: false
-      # - package: ./dynamic-plugins/dist/backstage-plugin-kubernetes
-      #   disabled: false
-      # - package: ./dynamic-plugins/dist/backstage-plugin-kubernetes-backend-dynamic
-      #   disabled: false
-      # - package: ./dynamic-plugins/dist/backstage-community-plugin-tekton
-      #   disabled: false
-      # - package: ./dynamic-plugins/dist/backstage-community-plugin-topology
-      #   disabled: false
-      # - package: ./dynamic-plugins/dist/backstage-community-plugin-acr
-      #   disabled: false
-      # - package: ./dynamic-plugins/dist/backstage-community-plugin-jfrog-artifactory
-      #   disabled: false
-      # - package: ./dynamic-plugins/dist/backstage-community-plugin-nexus-repository-manager
-      #   disabled: false
-      # - package: ./dynamic-plugins/dist/backstage-community-plugin-quay
-      #   disabled: false
+      # GitHub Pull Requests Board plugin
+      - package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/backstage-community-plugin-github-pull-requests-board:pr_1275__0.9.0!backstage-community-plugin-github-pull-requests-board
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              backstage-community.plugin-github-pull-requests-board:
+                entityTabs:
+                  - mountPoint: entity.page.pull-requests-board
+                    path: /pull-requests-board
+                    title: Pull Requests Board
+                mountPoints:
+                  - mountPoint: entity.page.pull-requests-board/cards
+                    importName: EntityTeamPullRequestsCard
+                    config:
+                      layout:
+                        gridColumn: 1 / -1
+                      if:
+                        anyOf:
+                          - isKind: Group
+                  - mountPoint: home.page/cards
+                    importName: PullRequestsBoard
+                    config:
+                      id: github-pull-request-board
+                      title: "GitHub: Pull Request Board"
+                      description: A board that shows open Pull Requests and their review status
+                      layouts:
+                        xl: { w: 12, h: 6 }
+                        lg: { w: 12, h: 6 }
+                        md: { w: 12, h: 6 }
+                        sm: { w: 12, h: 6 }
+                        xs: { w: 12, h: 6 }
+                        xxs: { w: 12, h: 6 }
+                      cardLayout:
+                        width:
+                          minColumns: 4
+                          maxColumns: 12
+                          defaultColumns: 12
+                        height:
+                          minRows: 2
+                          maxRows: 12
+                          defaultRows: 4
+                      props:
+                        entities: [] # Required! If not provided, the board will use the current user's repositories and team.
 
       # test config viewer
       - package: oci://ghcr.io/redhat-developer/rhdh-plugin-export-overlays/proberaum-backstage-plugin-config-viewer:next__0.4.1!proberaum-backstage-plugin-config-viewer
@@ -45,9 +64,8 @@ upstream:
   backstage:
     image:
       registry: quay.io
-      repository: rhdh-community/rhdh
-      tag: pr-3487
-      pullPolicy: IfNotPresent
+      repository: rhdh/rhdh-hub-rhel9
+      tag: 1.8-160
 
     appConfig:
       userSettings:
@@ -61,14 +79,14 @@ upstream:
             target: https://github.com/christoph-jerolimov/janus/blob/main/test-catalog/all.yaml
             rules:
               - allow: [Component, System, API, Resource, Location, User, Group]
-
-          # test npm plugin
           - type: url
-            target: https://github.com/backstage/community-plugins/blob/main/workspaces/npm/examples/npmjs-examples.yaml
+            target: https://github.com/christoph-jerolimov/rhdh-helm-charts/blob/main/features/github/catalog.yaml
+            rules:
+              - allow: [Component, System, API, Resource, Location, User, Group]
           - type: url
-            target: https://github.com/backstage/community-plugins/blob/main/workspaces/npm/examples/github-examples.yaml
+            target: https://github.com/redhat-developer/rhdh/blob/main/catalog-info.yaml
           - type: url
-            target: https://github.com/backstage/community-plugins/blob/main/workspaces/npm/examples/gitlab-examples.yaml
+            target: https://github.com/redhat-developer/rhdh-cli/blob/main/catalog-info.yaml
 
       dynamicPlugins:
         frontend:
@@ -78,6 +96,9 @@ upstream:
                 title: Home (changed)
 
           red-hat-developer-hub.backstage-plugin-dynamic-home-page:
+            dynamicRoutes:
+              - path: /
+                importName: DynamicCustomizableHomePage
             mountPoints:
               - mountPoint: application/listener
                 importName: VisitListener

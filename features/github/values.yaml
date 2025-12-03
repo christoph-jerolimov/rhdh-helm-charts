@@ -7,16 +7,43 @@ global:
           dynamicPlugins:
             frontend:
               backstage-community.plugin-github-pull-requests-board:
+                entityTabs:
+                  - mountPoint: entity.page.pull-requests-board
+                    path: /pull-requests-board
+                    title: Pull Requests Board
                 mountPoints:
-                  - mountPoint: entity.page.pull-requests/cards
+                  - mountPoint: entity.page.pull-requests-board/cards
                     importName: EntityTeamPullRequestsCard
-                    config: 
-                      layout:                               
-                        gridColumn: "1 / -1"
-                        gridRow: "2"
+                    config:
+                      layout:
+                        gridColumn: 1 / -1
                       if:
                         anyOf:
                           - isKind: Group
+                  - mountPoint: home.page/cards
+                    importName: PullRequestsBoard
+                    config:
+                      id: github-pull-request-board
+                      title: "GitHub: Pull Request Board"
+                      description: A board that shows open Pull Requests and their review status
+                      layouts:
+                        xl: { w: 12, h: 6 }
+                        lg: { w: 12, h: 6 }
+                        md: { w: 12, h: 6 }
+                        sm: { w: 12, h: 6 }
+                        xs: { w: 12, h: 6 }
+                        xxs: { w: 12, h: 6 }
+                      cardLayout:
+                        width:
+                          minColumns: 4
+                          maxColumns: 12
+                          defaultColumns: 12
+                        height:
+                          minRows: 2
+                          maxRows: 12
+                          defaultRows: 4
+                      props:
+                        entities: [] # Required! If not provided, the board will use the current user's repositories and team.
 
 upstream:
   backstage:
