@@ -1,7 +1,7 @@
 # https://quay.io/repository/rhdh/chart?tab=tags
 # https://quay.io/repository/rhdh/rhdh-hub-rhel9?tab=tags
 chart-name=oci://quay.io/rhdh/chart
-chart-version=1.8-153-CI
+chart-version=1.8-160-CI
 
 release-name=redhat-developer-hub
 release-namespace=rhdh-all-in-one-1-8-ci
