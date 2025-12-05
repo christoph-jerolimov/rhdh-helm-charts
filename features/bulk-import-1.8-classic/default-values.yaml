@@ -29,8 +29,6 @@ global:
 # -- Upstream Backstage [chart configuration](https://github.com/backstage/charts/blob/main/charts/backstage/values.yaml)
 # @default -- Use Openshift compatible settings
 upstream:
-  # upstream.nameOverride affects the resources created by the upstream Backstage Chart,
-  # like the baseUrl fields set in the app-config ConfigMap created by that Chart.
   nameOverride: developer-hub
   backstage:
     image:
@@ -39,7 +37,7 @@ upstream:
       # tag is set to digest via prepare.sh script
       # tag: "${RHDH_DIGEST}"
 
-      tag: c044fed8485a62a5051ac726525da546936be22f268db05491bf81582e0e6194
+      tag: 0b95eb835576eb3b093695168fb78672f9d378ad027eb0298d807e232c021c09
     command: []
     # FIXME (tumido): USE POSTGRES_PASSWORD and POSTGRES_USER instead of POSTGRES_ADMIN_PASSWORD
     # This is a hack. In {fedora,rhel}/postgresql images, regular user is forbidden
@@ -49,8 +47,6 @@ upstream:
     # create multiple DBs. Since Backstage requires by default 5 different DBs, we
     # can't accommodate that properly.
     appConfig:
-      auth:
-        providers: {}
       app:
         # Please update to match host in case you don't want to configure hostname via `global.clusterRouterBase` or `global.host` if not deploying on an openshift cluster.
         baseUrl: 'https://{{- include "janus-idp.hostname" . }}'
@@ -213,7 +209,7 @@ upstream:
       # tag is set to digest via prepare.sh script
       # tag: "${POSTGRESQL_DIGEST}"
 
-      tag: b84ed1c0789d08b9ea9d8609ac80c1863bf47fb872abe3e33387aaca8ae1150d
+      tag: 10475924583aba63c50b00337b4097cdad48e7a8567fd77f400b278ad1782bfc
     auth:
       secretKeys:
         adminPasswordKey: postgres-password
@@ -275,40 +271,4 @@ route:
     # --  Indicates the desired behavior for insecure connections to a route.
     # <br /> While each router may make its own decisions on which ports to expose, this is normally port 80. The only valid values are None, Redirect, or empty for disabled.
     insecureEdgeTerminationPolicy: "Redirect"
-auditLog:
-  # -- Spec of the audit log volume claim.
-  # <br/> Note that, by default, this is set to use the default storage class, if available in the cluster.
-  volumeClaimSpec:
-    accessModes:
-      - ReadWriteOnce
-    resources:
-      requests:
-        storage: 1Gi
-dynamicPlugins:
-  cache:
-    # -- Spec of the dynamic plugins root volume claim.
-    # <br/> Note that, by default, this is set to use the default storage class, if available in the cluster.
-    volumeClaimSpec:
-      accessModes:
-        - ReadWriteOnce
-      resources:
-        requests:
-          storage: 5Gi
-# -- Test pod parameters
-test:
-  # -- Whether to enable the test-connection pod used for testing the Release using `helm test`.
-  enabled: true
-  image:
-    # -- Test connection pod image registry
-    registry: quay.io
-    # -- Test connection pod image repository. Note that the image needs to have both the `sh` and `curl` binaries in it.
-    repository: curl/curl
-    # -- Test connection pod image tag. Note that the image needs to have both the `sh` and `curl` binaries in it.
-    tag: latest
-# RHIDP-3115: nameOverride affects the resources created by the RHDH Chart,
-# like the Route host created on OCP.
-# It needs to match the value provided in 'upstream.nameOverride'
-# to have consistent behavior between the Route and the URLs
-# from the app-config ConfigMap managed by the Chart.
-nameOverride: developer-hub
 

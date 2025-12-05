@@ -1,0 +1,28 @@
+global:
+  dynamic:
+    plugins:
+      - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-bulk-import
+        disabled: false
+      - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-bulk-import-backend-dynamic
+        disabled: false
+
+upstream:
+  backstage:
+    image:
+      registry: registry.redhat.io
+      repository: rhdh/rhdh-hub-rhel9@sha256
+      tag: "62f32e50727c5006766a34daa5b6472b649cd9894f3fe9543b8ecc67e6760e8e"
+
+    appConfig:
+      bulkImport:
+        importAPI: scaffolder
+        importTemplate: scaffolder-template
+
+      catalog:
+        rules:
+          - allow: [Component, System, API, Resource, Location]
+        locations:
+          - type: url
+            target: https://github.com/christoph-jerolimov/janus/blob/main/test-catalog/all.yaml
+            rules:
+              - allow: [Component, System, API, Resource, Location, User, Group]

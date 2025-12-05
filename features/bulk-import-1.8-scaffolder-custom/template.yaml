@@ -1,0 +1,12 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: bulk-import-template
+spec:
+  type: service
+  steps:
+    - action: debug:wait
+      id: wait-10-sec
+      name: Waiting for 10 seconds
+      input:
+        seconds: 10

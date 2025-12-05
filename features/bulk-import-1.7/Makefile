@@ -2,10 +2,10 @@ repo-name=openshift-helm-charts
 repo-url=https://charts.openshift.io/
 
 chart-name=openshift-helm-charts/redhat-developer-hub
-chart-version=1.3
+chart-version=1.7.3
 
 release-name=redhat-developer-hub
-release-namespace=rhdh-bi-1-3-test
+release-namespace=rhdh-bi-1-7-test
 
 cluster-route-suffix != ../../scripts/get-cluster-route-suffix.sh
 

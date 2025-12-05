@@ -1,0 +1,27 @@
+global:
+  dynamic:
+    plugins:
+      - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-bulk-import
+        disabled: false
+      - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-bulk-import-backend-dynamic
+        disabled: false
+
+upstream:
+  backstage:
+    appConfig:
+      bulkImport:
+        importAPI: scaffolder
+        importTemplate: create-pr-with-catalog-info
+
+      catalog:
+        rules:
+          - allow: [Component, System, API, Resource, Location]
+        locations:
+          - type: url
+            target: https://github.com/christoph-jerolimov/janus/blob/main/test-catalog/all.yaml
+            rules:
+              - allow: [Component, System, API, Resource, Location, User, Group]
+          - type: url
+            target: https://github.com/redhat-developer/rhdh-plugins/blob/main/workspaces/bulk-import/examples/template/create-pr-with-catalog-info.yaml
+            rules:
+              - allow: [Template]

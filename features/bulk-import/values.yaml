@@ -5,3 +5,9 @@ global:
         disabled: false
       - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-bulk-import-backend-dynamic
         disabled: false
+
+  backstage:
+    image:
+      registry: registry.redhat.io
+      repository: rhdh/rhdh-hub-rhel9@sha256
+      tag: "0b95eb835576eb3b093695168fb78672f9d378ad027eb0298d807e232c021c09"
