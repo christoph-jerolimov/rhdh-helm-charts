@@ -22,6 +22,6 @@ upstream:
             rules:
               - allow: [Component, System, API, Resource, Location, User, Group]
           - type: url
-            target: https://github.com/redhat-developer/rhdh-plugins/blob/main/workspaces/bulk-import/examples/template/create-pr-with-catalog-info.yaml
+            target: https://github.com/christoph-jerolimov/rhdh-helm-charts/blob/main/features/bulk-import-1.8-scaffolder-custom/template.yaml
             rules:
               - allow: [Template]
