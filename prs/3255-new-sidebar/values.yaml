@@ -8,106 +8,106 @@ global:
         pluginConfig:
           bulkImport:
             importAPI: open-pull-requests
-      - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-global-header
-        disabled: false
-        pluginConfig:
-          app:
-            sidebar:
-              search: false
-              settings: false
-              logo: false
-          dynamicPlugins:
-            frontend:
-              red-hat-developer-hub.backstage-plugin-global-header:
-                mountPoints:
-                  - mountPoint: application/header
-                    importName: GlobalHeader
-                    config:
-                      position: above-main-content # above-main-content | above-sidebar
-              default.main-menu-items:
-                menuItems:
-                  default.my-plugin:
-                    priority: 10
-                    parent: favorites
-                    title: My Plugin
-                  default.favorites:
-                    icon: favorite
-                    title: Favorites
-                    priority: 100
-                  default.my-custom-item: # Must use 'default.' prefix
-                    title: My Custom Page
-                    icon: star
-                    to: "/my-custom-page"
-                    priority: 85
-                  default.my-menu-group: # Parent menu group
-                    title: My Tools
-                    icon: folder
-                    priority: 75
-                  default.admin:
-                    title: Administration
-                    icon: admin
-                  default.create:
-                    title: ""
-                  default.nested-item: # Child menu item
-                    title: Nested Tool
-                    icon: extension
-                    to: /nested-tool
-                    # parent: my-menu-group
-                    priority: 10
-                  default.nested-item9: # Child menu item
-                    title: Nested Tool2
-                    icon: extension
-                    to: /nested-tool2
-                    # parent: my-menu-group
-                    priority: 10
-                  default.nested-item8: # Child menu item
-                    title: Nested Tool3
-                    icon: extension
-                    to: /nested-tool3
-                    # parent: my-menu-group
-                    priority: 10
-                  default.nested-item7: # Child menu item
-                    title: Nested Tool4
-                    icon: extension
-                    to: /nested-tool4
-                    # parent: my-menu-group
-                    priority: 10
-                  default.nested-item6: # Child menu item
-                    title: Nested Tool1
-                    icon: extension
-                    to: /nested-tool5
-                    # parent: my-menu-group
-                    priority: 10
-                  default.nested-item5: # Child menu item
-                    title: Nested Tool5
-                    icon: extension
-                    to: /nested-tool6
-                    # parent: my-menu-group
-                    priority: 10
-                  default.nested-item4: # Child menu item
-                    title: Nested Tool6
-                    icon: extension
-                    to: /nested-tool
-                    # parent: my-menu-group
-                    priority: 10
-                  default.nested-item3: # Child menu item
-                    title: Nested Tool7
-                    icon: extension
-                    to: /nested-tool7
-                    # parent: my-menu-group
-                    priority: 10
-                  default.nested-item2: # Child menu item
-                    title: Nested Tool8
-                    icon: extension
-                    to: /nested-tool8
-                    # parent: my-menu-group
-                    priority: 10
-                  default.nested-item1: # Child menu item
-                    title: Nested Tool9
-                    icon: extension
-                    to: /nested-tool9
-                    # parent: my-menu-group
-                    priority: 10
+      # - package: ./dynamic-plugins/dist/red-hat-developer-hub-backstage-plugin-global-header
+      #   disabled: false
+      #   pluginConfig:
+      #     app:
+      #       sidebar:
+      #         search: false
+      #         settings: false
+      #         logo: false
+      #     dynamicPlugins:
+      #       frontend:
+      #         red-hat-developer-hub.backstage-plugin-global-header:
+      #           mountPoints:
+      #             - mountPoint: application/header
+      #               importName: GlobalHeader
+      #               config:
+      #                 position: above-main-content # above-main-content | above-sidebar
+      #         default.main-menu-items:
+      #           menuItems:
+      #             default.my-plugin:
+      #               priority: 10
+      #               parent: favorites
+      #               title: My Plugin
+      #             default.favorites:
+      #               icon: favorite
+      #               title: Favorites
+      #               priority: 100
+      #             default.my-custom-item: # Must use 'default.' prefix
+      #               title: My Custom Page
+      #               icon: star
+      #               to: "/my-custom-page"
+      #               priority: 85
+      #             default.my-menu-group: # Parent menu group
+      #               title: My Tools
+      #               icon: folder
+      #               priority: 75
+      #             default.admin:
+      #               title: Administration
+      #               icon: admin
+      #             default.create:
+      #               title: ""
+      #             default.nested-item: # Child menu item
+      #               title: Nested Tool
+      #               icon: extension
+      #               to: /nested-tool
+      #               # parent: my-menu-group
+      #               priority: 10
+      #             default.nested-item9: # Child menu item
+      #               title: Nested Tool2
+      #               icon: extension
+      #               to: /nested-tool2
+      #               # parent: my-menu-group
+      #               priority: 10
+      #             default.nested-item8: # Child menu item
+      #               title: Nested Tool3
+      #               icon: extension
+      #               to: /nested-tool3
+      #               # parent: my-menu-group
+      #               priority: 10
+      #             default.nested-item7: # Child menu item
+      #               title: Nested Tool4
+      #               icon: extension
+      #               to: /nested-tool4
+      #               # parent: my-menu-group
+      #               priority: 10
+      #             default.nested-item6: # Child menu item
+      #               title: Nested Tool1
+      #               icon: extension
+      #               to: /nested-tool5
+      #               # parent: my-menu-group
+      #               priority: 10
+      #             default.nested-item5: # Child menu item
+      #               title: Nested Tool5
+      #               icon: extension
+      #               to: /nested-tool6
+      #               # parent: my-menu-group
+      #               priority: 10
+      #             default.nested-item4: # Child menu item
+      #               title: Nested Tool6
+      #               icon: extension
+      #               to: /nested-tool
+      #               # parent: my-menu-group
+      #               priority: 10
+      #             default.nested-item3: # Child menu item
+      #               title: Nested Tool7
+      #               icon: extension
+      #               to: /nested-tool7
+      #               # parent: my-menu-group
+      #               priority: 10
+      #             default.nested-item2: # Child menu item
+      #               title: Nested Tool8
+      #               icon: extension
+      #               to: /nested-tool8
+      #               # parent: my-menu-group
+      #               priority: 10
+      #             default.nested-item1: # Child menu item
+      #               title: Nested Tool9
+      #               icon: extension
+      #               to: /nested-tool9
+      #               # parent: my-menu-group
+      #               priority: 10
 
 upstream:
   backstage:
