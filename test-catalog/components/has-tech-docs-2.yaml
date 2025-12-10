@@ -1,0 +1,25 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: has-tech-docs-2
+  annotations:
+    argocd/app-name: 'janus-idp'
+    backstage.io/kubernetes-id: 'janus-idp'
+    github.com/project-slug: janus-idp/backstage-showcase
+    quay.io/repository-slug: janus-idp/backstage-showcase
+    backstage.io/techdocs-ref: url:https://github.com/janus-idp/backstage-showcase
+    backstage.io/kubernetes-namespace: christoph
+    sonarqube.org/project-key: janus-idp_backstage-showcase
+    tekton.dev/cicd: "true"
+    kubernetes.io/api-server: https://api.crc.testing:6443
+spec:
+  type: service
+  system: janus-idp
+  owner: rhdh-team
+  lifecycle: production
+  dependsOn:
+    - resource:pgdb
+    - resource:argocd
+    - resource:obc
+    - resource:keycloak
+    - resource:github

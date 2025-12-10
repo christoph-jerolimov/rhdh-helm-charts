@@ -26,6 +26,10 @@ spec:
     - ./components/christoph-demo1-service.yaml
     - ./components/christoph-demo2-service.yaml
     - ./components/christoph-demo3-service.yaml
+    - ./components/has-tech-docs-1.yaml
+    - ./components/has-tech-docs-2.yaml
+    - ./components/has-tech-docs-3.yaml
+    - ./components/has-tech-docs-4.yaml
     - ./apis/christoph-demo1-api.yaml
     - ./apis/christoph-demo2-api.yaml
     - ./apis/christoph-demo3-api.yaml
