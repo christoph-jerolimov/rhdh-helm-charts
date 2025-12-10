@@ -45,7 +45,7 @@ upstream:
       # tag is set to digest via prepare.sh script
       # tag: "${RHDH_DIGEST}"
 
-      tag: "7d9ec39152ee14dba0fe0644cd46114763f6a22cec64b634d8e812f01f32f8e6"
+      tag: "9f870202198dca9d941ebb5321334c45cc2309bb079d2a9e602d8a099f8ffa6f"
       pullPolicy: IfNotPresent
     command: []
     # FIXME (tumido): USE POSTGRES_PASSWORD and POSTGRES_USER instead of POSTGRES_ADMIN_PASSWORD
@@ -262,7 +262,7 @@ upstream:
       # tag is set to digest via prepare.sh script
       # tag: "${POSTGRESQL_DIGEST}"
 
-      tag: 820516969dbd2bebcf50470e0612bd50b5ef8f6855264130b55dfc0c202233c7
+      tag: 8da4d3837db7dc4baaa1cc2612fe8e13b7507a4690f1ff5e5e97a26a157aa9e5
     auth:
       secretKeys:
         adminPasswordKey: postgres-password
@@ -391,15 +391,15 @@ orchestrator:
     # Previously, we were using the "@redhat/plugin@version" form along with injecting a .npmrc Secret to resolve the "@redhat" scope,
     # but this caused conflicting issues with user-provided .npmrc secrets.
     - disabled: false
-      package: "https://npm.registry.redhat.com/@redhat/backstage-plugin-orchestrator-backend-dynamic/-/backstage-plugin-orchestrator-backend-dynamic-1.7.1.tgz"
-      integrity: sha512-9cXbedr0lC7ns7SNqARrWSQI4JGcZFw5xpfpUzA1tJaMMUjzAdPHTXqljf62/fs4hYBK8TJsWJ2KJkGVMzbrHQ==
+      package: "https://npm.registry.redhat.com/@redhat/backstage-plugin-orchestrator-backend-dynamic/-/backstage-plugin-orchestrator-backend-dynamic-1.8.2.tgz"
+      integrity: sha512-6G0YguzCM5nCDpOrIGJpLTXVMr6EBdIVqSXtsLH9RvBH25RTuFpfJ7q6eEp26DqveaiqUCfBpJ51smdjcsEzFQ==
       pluginConfig:
         orchestrator:
           dataIndexService:
             url: http://sonataflow-platform-data-index-service.{{ .Release.Namespace }}
     - disabled: false
-      package: "https://npm.registry.redhat.com/@redhat/backstage-plugin-orchestrator/-/backstage-plugin-orchestrator-1.7.1.tgz"
-      integrity: sha512-Cqu9EQwVQ4mpdgWTUA0MW89Gul0IklhvkkqVoO3CloQ1dnAj1XyXikCphzH5TmNDDd9K66dOpaKKCaW9KeJ4WA==
+      package: "https://npm.registry.redhat.com/@redhat/backstage-plugin-orchestrator/-/backstage-plugin-orchestrator-1.8.2.tgz"
+      integrity: sha512-rnUA6iZ2JVAyASfwS4P9HeFmpqCgH6FQouzzg4s6lCPAsYUFvu6tifJ3df5lThXPUTJ2cDvvQgamU+4DiHP2jw==
       pluginConfig:
         dynamicPlugins:
           frontend:
@@ -427,15 +427,15 @@ orchestrator:
                       anyOf:
                         - IsOrchestratorCatalogTabAvailable
     - disabled: false
-      package: "https://npm.registry.redhat.com/@redhat/backstage-plugin-scaffolder-backend-module-orchestrator-dynamic/-/backstage-plugin-scaffolder-backend-module-orchestrator-dynamic-1.7.1.tgz"
-      integrity: sha512-J1sTjA5kj6DphG8D65go9KlpIfKyLN/wq+XlY5Cb5djEo8mvF3wn3Haf60OGFo5cP4OfRSWqFwT7LM5/dNVwAg==
+      package: "https://npm.registry.redhat.com/@redhat/backstage-plugin-scaffolder-backend-module-orchestrator-dynamic/-/backstage-plugin-scaffolder-backend-module-orchestrator-dynamic-1.8.2.tgz"
+      integrity: sha512-N2hCn9RI/QVEoK56FAkGkSDbvfQCOIzVsJTwDX0kf//npO++2crRSJpB1Lr/m2UtYxfaXZX53p8sPcK3g8yWkQ==
       pluginConfig:
         orchestrator:
           dataIndexService:
             url: http://sonataflow-platform-data-index-service.{{ .Release.Namespace }}
     - disabled: false
-      package: "https://npm.registry.redhat.com/@redhat/backstage-plugin-orchestrator-form-widgets/-/backstage-plugin-orchestrator-form-widgets-1.7.1.tgz"
-      integrity: sha512-0KIXrZoJ+O4xNNzN/zB4+VMuaRPuiUviAmM+fIhTo/P9aLA36F9aIlyMbUbki49uaJ0zd8KXMBvmJSHZNrYkGQ==
+      package: "https://npm.registry.redhat.com/@redhat/backstage-plugin-orchestrator-form-widgets/-/backstage-plugin-orchestrator-form-widgets-1.8.2.tgz"
+      integrity: sha512-Pe0dn3g+YTK3jbl36E8nt4zdyH/3w+MWgRyFWPc2B0eV4/L/aRfRC4KxcktmHPdamRGXTIaXL6cFae8TZl8Htw==
       pluginConfig:
         dynamicPlugins:
           frontend:

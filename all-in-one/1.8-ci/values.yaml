@@ -69,7 +69,7 @@ upstream:
     image:
       registry: quay.io
       repository: rhdh/rhdh-hub-rhel9
-      tag: 1.8-153
+      tag: 1.8-176
 
     appConfig:
       app:
