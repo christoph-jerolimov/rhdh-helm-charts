@@ -7,16 +7,16 @@ metadata:
     This is a small demo service with annotations for:
     - Tekton (with namespace and label selector)
   links:
-    - title: My Janus notes
-      url: https://github.com/jerolimov/janus
+    - title: My RHDH notes
+      url: https://github.com/christoph-jerolimov/rhdh-experiments
   annotations:
-    backstage.io/source-location: url:https://github.com/jerolimov/janus/blob/main/test-catalog/components/christoph-demo1-service.yaml
+    backstage.io/source-location: url:https://github.com/christoph-jerolimov/rhdh-experiments/blob/main/test-catalog/components/christoph-demo1-service.yaml
     backstage.io/techdocs-ref: dir:../../../techdocs/christoph-demo
-    github.com/project-slug: jerolimov/janus
+    github.com/project-slug: christoph-jerolimov/rhdh-experiments
     backstage.io/kubernetes-id: christoph-demo3-service
     backstage.io/kubernetes-namespace: christoph
     backstage.io/kubernetes-label-selector: component=christoph-demo3-service
-    janus-idp.io/tekton: my-backstage
+    tekton.dev/cicd: "true"
   tags:
     - christoph-demo
 spec:

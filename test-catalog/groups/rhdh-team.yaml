@@ -1,8 +1,8 @@
 apiVersion: backstage.io/v1alpha1
 kind: Group
 metadata:
-  name: janus-authors
-  title: Janus-IDP Authors
+  name: rhdh-team
+  title: RHDH Team
 spec:
   type: team
   children: []

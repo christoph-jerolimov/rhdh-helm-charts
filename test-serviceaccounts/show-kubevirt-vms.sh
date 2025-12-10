@@ -1,7 +1,7 @@
 #!/bin/bash
 
 namespace="default"
-serviceaccount="janus-idp-reader"
+serviceaccount="rhdh-reader"
 
 token=$(oc create -n "$namespace" token --duration=168h "$serviceaccount")
 whoami=$(oc "--token=$token" whoami)

@@ -4,7 +4,7 @@ metadata:
   name: christoph-demo-components
 spec:
   targets:
-    - ./groups/janus-authors.yaml
+    - ./groups/rhdh-team.yaml
     - ./users/AndrienkoAleksandr.yaml
     - ./users/benwilcock.yaml
     - ./users/christoph-jerolimov.yaml

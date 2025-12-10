@@ -3,4 +3,4 @@ kind: User
 metadata:
   name: rhdh-qe
 spec:
-  memberOf: [janus-authors]
+  memberOf: [rhdh-team]

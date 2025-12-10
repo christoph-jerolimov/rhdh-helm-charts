@@ -1,12 +1,12 @@
 #!/bin/bash
 
 namespace="default"
-serviceaccount="janus-idp-reader"
+serviceaccount="rhdh-reader"
 
 oc create -n "$namespace" serviceaccount "$serviceaccount"
 
 # kubernetes core
-oc create clusterrole janus-idp-kubernetes-core-reader \
+oc create clusterrole rhdh-kubernetes-core-reader \
     --verb=get,watch,list \
     --resource=pods \
     --resource=pods/log \
@@ -25,18 +25,18 @@ oc create clusterrole janus-idp-kubernetes-core-reader \
     --resource=services
 
 # kubernetes metrics
-oc create clusterrole janus-idp-kubernetes-metrics-reader \
+oc create clusterrole rhdh-kubernetes-metrics-reader \
    --verb=get,watch,list \
    --resource=pods.metrics.k8s.io
 
 # openshift imagestreams
-oc create clusterrole janus-idp-openshift-imagestream-reader \
+oc create clusterrole rhdh-openshift-imagestream-reader \
     --verb=get,watch,list \
     --resource=imagestreams.image.openshift.io \
     --resource=imagestreamtags.image.openshift.io
 
 # tekton
-oc create clusterrole janus-idp-tekton-reader \
+oc create clusterrole rhdh-tekton-reader \
     --verb=get,watch,list \
     --resource=tasks.tekton.dev \
     --resource=taskruns.tekton.dev \
@@ -44,12 +44,12 @@ oc create clusterrole janus-idp-tekton-reader \
     --resource=pipelineruns.tekton.dev
 
 # kubevirt
-oc create clusterrole janus-idp-kubevirt-reader \
+oc create clusterrole rhdh-kubevirt-reader \
     --verb=get,watch,list \
     --resource=virtualmachines.kubevirt.io
 
-oc adm policy add-cluster-role-to-user janus-idp-kubernetes-core-reader -n "$namespace" -z "$serviceaccount"
-oc adm policy add-cluster-role-to-user janus-idp-kubernetes-metrics-reader -n "$namespace" -z "$serviceaccount"
-oc adm policy add-cluster-role-to-user janus-idp-openshift-imagestream-reader -n "$namespace" -z "$serviceaccount"
-oc adm policy add-cluster-role-to-user janus-idp-tekton-reader -n "$namespace" -z "$serviceaccount"
-oc adm policy add-cluster-role-to-user janus-idp-kubevirt-reader -n "$namespace" -z "$serviceaccount"
+oc adm policy add-cluster-role-to-user rhdh-kubernetes-core-reader -n "$namespace" -z "$serviceaccount"
+oc adm policy add-cluster-role-to-user rhdh-kubernetes-metrics-reader -n "$namespace" -z "$serviceaccount"
+oc adm policy add-cluster-role-to-user rhdh-openshift-imagestream-reader -n "$namespace" -z "$serviceaccount"
+oc adm policy add-cluster-role-to-user rhdh-tekton-reader -n "$namespace" -z "$serviceaccount"
+oc adm policy add-cluster-role-to-user rhdh-kubevirt-reader -n "$namespace" -z "$serviceaccount"
