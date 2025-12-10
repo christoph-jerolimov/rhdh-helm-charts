@@ -1,0 +1,28 @@
+[
+  {
+    "title": "Red Hat Developer Hub",
+    "isExpanded": true,
+    "links": [
+      {
+        "label": "Website",
+        "url": "https://developers.redhat.com/rhdh/overview",
+        "iconUrl": "/homepage/icons/icons8/web.png"
+      },
+      {
+        "label": "Docs",
+        "url": "https://docs.redhat.com/en/documentation/red_hat_developer_hub/",
+        "iconUrl": "/homepage/icons/icons8/external-blog-copywriting-itim2101-lineal-itim2101.png"
+      },
+      {
+        "label": "GitHub",
+        "url": "https://github.com/janus-idp/backstage-showcase",
+        "iconUrl": "/homepage/icons/icons8/github.png"
+      },
+      {
+        "label": "Plugins",
+        "url": "https://github.com/janus-idp/backstage-plugins",
+        "iconUrl": "/homepage/icons/icons8/github.png"
+      }
+    ]
+  }
+]

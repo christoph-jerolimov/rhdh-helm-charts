@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Backstage",
+    "isExpanded": true,
+    "links": [
+      {
+        "label": "Website",
+        "url": "https://backstage.io",
+        "iconUrl": "/homepage/icons/icons8/web.png"
+      },
+      {
+        "label": "Docs",
+        "url": "https://backstage.io/docs/",
+        "iconUrl": "/homepage/icons/icons8/external-blog-copywriting-itim2101-lineal-itim2101.png"
+      },
+      {
+        "label": "GitHub",
+        "url": "https://github.com/backstage/backstage",
+        "iconUrl": "/homepage/icons/icons8/github.png"
+      }
+    ]
+  }
+]

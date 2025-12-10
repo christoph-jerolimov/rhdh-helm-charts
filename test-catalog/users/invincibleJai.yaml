@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: invincibleJai
+  title: Jaivardhan Kumar (GitHub) # shown in the table
+spec:
+  profile:
+    displayName: Jaivardhan Kumar (GitHub) # shown on the detail page
+    picture: https://avatars.githubusercontent.com/u/5129024?v=4
+  memberOf: [janus-authors]

@@ -1,0 +1,31 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: christoph-demo-components
+spec:
+  targets:
+    - ./groups/janus-authors.yaml
+    - ./users/AndrienkoAleksandr.yaml
+    - ./users/benwilcock.yaml
+    - ./users/christoph-jerolimov.yaml
+    - ./users/christophe-f.yaml
+    - ./users/ciiay.yaml
+    - ./users/cjerolim.yaml
+    - ./users/debsmita1.yaml
+    - ./users/divyanshiGupta.yaml
+    - ./users/invincibleJai.yaml
+    - ./users/its-mitesh-kumar.yaml
+    - ./users/kadel.yaml
+    - ./users/lokanandaprabhu.yaml
+    - ./users/Lucifergene.yaml
+    - ./users/rhdh-qe.yaml
+    - ./users/ShiranHi.yaml
+    - ./users/teknaS47.yaml
+    - ./systems/christoph-demo-system.yaml
+    - ./components/backstage-showcase.yaml
+    - ./components/christoph-demo1-service.yaml
+    - ./components/christoph-demo2-service.yaml
+    - ./components/christoph-demo3-service.yaml
+    - ./apis/christoph-demo1-api.yaml
+    - ./apis/christoph-demo2-api.yaml
+    - ./apis/christoph-demo3-api.yaml

@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: benwilcock
+  title: Ben Wilcock (GitHub) # shown in the table
+spec:
+  profile:
+    displayName: Ben Wilcock (GitHub) # shown on the detail page
+    picture: https://avatars.githubusercontent.com/u/5331092?v=4
+  memberOf: [janus-authors]

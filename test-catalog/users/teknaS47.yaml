@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: teknaS47
+  title: Sanket Saikia (GitHub) # shown in the table
+spec:
+  profile:
+    displayName: Sanket Saikia (GitHub) # shown on the detail page
+    picture: https://avatars.githubusercontent.com/u/29019164?v=4
+  memberOf: [janus-authors]

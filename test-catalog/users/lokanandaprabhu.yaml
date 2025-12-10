@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: lokanandaprabhu
+  title: Lokananda Prabhu (GitHub) # shown in the table
+spec:
+  profile:
+    displayName: Lokananda Prabhu (GitHub) # shown on the detail page
+  memberOf: [janus-authors]

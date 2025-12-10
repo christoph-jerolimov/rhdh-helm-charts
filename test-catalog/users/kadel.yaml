@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: kadel
+  title: Tomas Kral (GitHub) # shown in the table
+spec:
+  profile:
+    displayName: Tomas Kral (GitHub) # shown on the detail page
+    picture: https://avatars.githubusercontent.com/u/57206?v=4
+  memberOf: [janus-authors]

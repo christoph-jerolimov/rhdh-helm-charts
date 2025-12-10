@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: ShiranHi
+  title: Shiran Hirshberg (GitHub) # shown in the table
+spec:
+  profile:
+    displayName: Shiran Hirshberg (GitHub) # shown on the detail page
+    picture: https://avatars.githubusercontent.com/u/77277517?v=4
+  memberOf: [janus-authors]

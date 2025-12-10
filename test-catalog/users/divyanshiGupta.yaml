@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: divyanshiGupta
+  title: Divyanshi Gupta (GitHub) # shown in the table
+spec:
+  profile:
+    displayName: Divyanshi Gupta (GitHub) # shown on the detail page
+    picture: https://avatars.githubusercontent.com/u/20724543?v=4
+  memberOf: [janus-authors]

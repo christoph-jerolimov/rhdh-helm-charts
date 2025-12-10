@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: debsmita1
+  title: Debsmita Santra (GitHub) # shown in the table
+spec:
+  profile:
+    displayName: Debsmita Santra (GitHub) # shown on the detail page
+    picture: https://avatars.githubusercontent.com/u/22490998?v=4
+  memberOf: [janus-authors]
